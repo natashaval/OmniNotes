@@ -21,6 +21,10 @@ public class Note {
     private Boolean inTrash;
     private Boolean isArchived;
 
+    Note() {
+        
+    }
+
     public void addTitle(Integer noteId, String title){}
     public void addAttachment(Integer noteId, Attachment attachment){}
     public void addReminder(Integer noteId, Reminder reminder){}

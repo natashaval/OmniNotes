@@ -5,13 +5,34 @@
  */
 package omninotes;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 /**
  *
  * @author Natasha
  */
 
 // Controller
-public class NoteEditor {
+public class NoteEditor {    
+     
+    DBConnection db = new DBConnection();
+    Connection conn = null;
+    MainMenuUI mm = null;
+    
+    public NoteEditor(MainMenuUI mm){
+        this.mm = mm;
+        conn = db.newConnection();
+    }
+    
+    public NoteEditor(){
+        conn = db.newConnection();
+    }
+        
     public void categorize(Note note, Category category) {
         
     }
@@ -40,17 +61,89 @@ public class NoteEditor {
         
     }
     
-    public void saveNote(Note note){}
+    public void saveNote(Note note){
+        
+    }
+    
+    public void saveNote(String title, String content, String mode, int noteId){
+        if ("".equals(title.trim()) || "".equals(content.trim())) {
+            return;
+        }
+        Note note = new Note();
+        note.setTitle(title);
+        note.setContent(content);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        Date date = new Date();
+        note.setCreatedDate(date);
+        note.setNoteId(noteId);
+        String sql;
+        
+        
+               
+        try{            
+        if ("update".equals(mode)) {
+            sql = "UPDATE post SET title = ?, content = ? WHERE id_note = ?";
+            
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, note.getTitle());
+            preparedStatement.setString(2, note.getContent());
+            preparedStatement.setInt(3, note.getNoteId());            
+            preparedStatement.executeUpdate();       
+            
+        }else{
+            sql = "INSERT INTO post (title, content, created_date)" +
+            "VALUES (?, ?, ?)";    
+            
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, note.getTitle());
+            preparedStatement.setString(2, note.getContent());
+            java.sql.Date sqlDate = new java.sql.Date(note.getCreatedDate().getTime());
+            preparedStatement.setDate(3, sqlDate);
+            preparedStatement.executeUpdate();        
+            
+            }             
+        }
+        catch(SQLException e){
+            System.out.println(e.getCause());
+            System.out.println(conn);
+        }        
+    }
     
     public void addReminder(Note note){}
     
-    public void openNoteEditorUI() {} // belum tau return nya bagaimana karena boundary
+    public void openNoteEditorUI(String mode) {
+        NoteFormEditorUI nfe = new NoteFormEditorUI();
+        System.out.println("hehe");
+        nfe.setVisible(true);
+        nfe.setMode(mode);
+    }
     
-    public void instantiateNote() {}
+    public void instantiateNote(String mode) {
+        NoteFormEditorUI nfe = new NoteFormEditorUI();
+        nfe.setVisible(true);
+        nfe.setMode(mode);
+    }
     
-    public void openNoteEditorUI(Note note) {} // belum tau return nya bagaimana karena boundary
+    public void openNoteEditorUI(Note note, String mode) {
+        NoteFormEditorUI nfe = new NoteFormEditorUI();
+        nfe.setInput(note.getTitle(), note.getContent());
+        nfe.setVisible(true);
+        nfe.setMode(mode);
+        nfe.setNoteId(note.getNoteId());
+    }
     
     public void unArchiveNote(Note note) {}
     
     public void addChecklist() {}
+
+    public void closeNoteEditorUI(){
+        
+    }
+    
+    public void openMainMenu(){
+        MainMenuUI mm = new MainMenuUI();
+        mm.setVisible(true);
+    }
+
+
 }
