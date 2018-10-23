@@ -58,20 +58,20 @@ public class MainMenuUI extends javax.swing.JFrame {
 
         myNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "id", "Title", "content"
+                "id", "Title", "content", "is_archive"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true
+                true, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -140,10 +140,12 @@ public class MainMenuUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+        //on click active notes
     private void myNotesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myNotesTableMouseClicked
         int noteId = Integer.parseInt(myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 0).toString());
         String title = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 1).toString();        
         String content = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 2).toString();
+        int isActive = Integer.parseInt(myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 3).toString());
         Note note = new Note();
         note.setTitle(title);
         note.setContent(content);
@@ -168,6 +170,7 @@ public class MainMenuUI extends javax.swing.JFrame {
             TableColumnModel tcm = myNotesTable.getColumnModel();
             tcm.removeColumn( tcm.getColumn(0) ); //hide id column
             tcm.removeColumn( tcm.getColumn(1) ); //hide content column
+            tcm.removeColumn( tcm.getColumn(1) ); //hide is_active column
 
 
             DefaultTableModel model = (DefaultTableModel) myNotesTable.getModel();
@@ -177,8 +180,9 @@ public class MainMenuUI extends javax.swing.JFrame {
                 int id = current.getNoteId();
                 String title = current.getTitle();
                 String content = current.getContent();
+                int isArchive = current.getIsArchived();
                 
-                Object[] row = { id, title, content };
+                Object[] row = { id, title, content, isArchive };
                 model.addRow(row);
             }
         }                     

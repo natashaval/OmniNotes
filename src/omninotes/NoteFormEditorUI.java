@@ -95,7 +95,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
 
         reminderBtn.setText("Reminder");
 
-        archiveStatus.setText("Not Arcvhied");
+        archiveStatus.setText("Not Archived");
         archiveStatus.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         archiveStatus.setEnabled(false);
 
@@ -138,12 +138,12 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
                     .addComponent(titleLabel)
                     .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(contentLabel)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
+                .addComponent(contentLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(archiveStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -171,9 +171,14 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_backBtnMouseClicked
 
     
-    public void setInput(String title, String content){
+    public void setInput(String title, String content, int archiveStatus){
         titleInput.setText(title);
         contentInput.setText(content);
+        if (archiveStatus == 1) {
+            this.archiveStatus.setText("Archived");
+        }else{
+            this.archiveStatus.setText("Not Archived");
+        }
     }
     /**
      * @param args the command line arguments

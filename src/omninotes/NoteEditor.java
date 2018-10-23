@@ -126,7 +126,7 @@ public class NoteEditor {
     
     public void openNoteEditorUI(Note note, String mode) {
         NoteFormEditorUI nfe = new NoteFormEditorUI();
-        nfe.setInput(note.getTitle(), note.getContent());
+        nfe.setInput(note.getTitle(), note.getContent(), note.getIsArchived());
         nfe.setVisible(true);
         nfe.setMode(mode);
         nfe.setNoteId(note.getNoteId());

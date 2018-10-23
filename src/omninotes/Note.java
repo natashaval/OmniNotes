@@ -16,10 +16,10 @@ public class Note {
     private String title;
     private String content;
     private Date createdDate;
-    private Boolean isChecklist;
-    private Integer isActive;
-    private Boolean inTrash;
-    private Boolean isArchived;
+    private int isChecklist;
+    private int isActive;
+    private int inTrash;
+    private int isArchived;
 
     Note() {
         
@@ -31,7 +31,7 @@ public class Note {
     public void enableChecklist(Integer noteId) {}
     
     
-    public Note(Integer noteId, String title, String content, Date createdDate, Boolean isChecklist, Integer isActive, Boolean inTrash, Boolean isArchived) {
+    public Note(Integer noteId, String title, String content, Date createdDate, int isChecklist, Integer isActive, int inTrash, int isArchived) {
         this.noteId = noteId;
         this.title = title;
         this.content = content;
@@ -75,11 +75,11 @@ public class Note {
         this.createdDate = createdDate;
     }
 
-    public Boolean getIsChecklist() {
+    public int getIsChecklist() {
         return isChecklist;
     }
 
-    public void setChecklist(Boolean isChecklist) {
+    public void setChecklist(int isChecklist) {
         this.isChecklist = isChecklist;
     }
 
@@ -91,19 +91,19 @@ public class Note {
         this.isActive = isActive;
     }
 
-    public Boolean getInTrash() {
+    public int getInTrash() {
         return inTrash;
     }
 
-    public void setInTrash(Boolean inTrash) {
+    public void setInTrash(int inTrash) {
         this.inTrash = inTrash;
     }
 
-    public Boolean getIsArchived() {
+    public int getIsArchived() {
         return isArchived;
     }
 
-    public void setIsArchived(Boolean isArchived) {
+    public void setIsArchived(int isArchived) {
         this.isArchived = isArchived;
     }
     

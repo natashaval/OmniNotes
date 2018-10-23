@@ -40,16 +40,18 @@ public class NoteControl {
     
     public void openMainMenu(){} // tidak tahu karena boundary
     
+    //returns LinkedList of notes, get active notes
     public LinkedList<Note> getNotes(){
         LinkedList<Note> myNotes = new LinkedList<Note>();
         try{
             Statement stmt = conn.createStatement();  
-            ResultSet rs=stmt.executeQuery("select * from post");                         
+            ResultSet rs=stmt.executeQuery("select * from post where is_active = 1");                         
             while(rs.next()){                
                 Note note = new Note();
                 note.setNoteId(rs.getInt(1));
                 note.setTitle(rs.getString(2));
-                note.setContent(rs.getString(3));                                
+                note.setContent(rs.getString(3));   
+                note.setIsArchived(rs.getInt(4));
                 myNotes.add(note);
             }
         }catch(Exception e) {
