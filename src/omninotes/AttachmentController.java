@@ -35,4 +35,8 @@ public class AttachmentController {
         
     }
     
+    public void openAttachmentUI(){
+//        AttachmentUI attachment = new 
+    }
+    
 }

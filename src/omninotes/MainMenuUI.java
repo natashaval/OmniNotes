@@ -22,7 +22,7 @@ public class MainMenuUI extends javax.swing.JFrame {
      */
     public MainMenuUI() {
         initComponents();
-    this.getNotes();        
+        this.getNotes();        
     }
         
 
@@ -41,7 +41,10 @@ public class MainMenuUI extends javax.swing.JFrame {
         jTree1 = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
         myNotesTable = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        archiveMenu = new javax.swing.JMenuItem();
+        trashMenu = new javax.swing.JMenuItem();
 
         jFormattedTextField6.setText("activeNote5");
 
@@ -89,12 +92,27 @@ public class MainMenuUI extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(myNotesTable);
 
-        jButton2.setText("View Active Notes");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jMenu1.setText("Menu");
+
+        archiveMenu.setText("Archive");
+        archiveMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                archiveMenuActionPerformed(evt);
             }
         });
+        jMenu1.add(archiveMenu);
+
+        trashMenu.setText("Trash");
+        trashMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trashMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(trashMenu);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,8 +124,7 @@ public class MainMenuUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
@@ -115,12 +132,10 @@ public class MainMenuUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
+                        .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(227, 227, 227))
@@ -135,10 +150,6 @@ public class MainMenuUI extends javax.swing.JFrame {
         this.dispose();
         ne.openNoteEditorUI("create");
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
 
         //on click active notes
     private void myNotesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myNotesTableMouseClicked
@@ -157,6 +168,19 @@ public class MainMenuUI extends javax.swing.JFrame {
         
         this.dispose();
     }//GEN-LAST:event_myNotesTableMouseClicked
+
+    private void archiveMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveMenuActionPerformed
+        NoteControl nc = new NoteControl();
+        nc.openArchiveUI();           
+        this.dispose();
+
+    }//GEN-LAST:event_archiveMenuActionPerformed
+
+    private void trashMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trashMenuActionPerformed
+        NoteControl nc = new NoteControl();
+        nc.openTrashUI();
+        this.dispose();
+    }//GEN-LAST:event_trashMenuActionPerformed
 
     public void getNotes(){
         NoteControl nc = new NoteControl();
@@ -224,12 +248,15 @@ public class MainMenuUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem archiveMenu;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JFormattedTextField jFormattedTextField6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTree jTree1;
     private javax.swing.JTable myNotesTable;
+    private javax.swing.JMenuItem trashMenu;
     // End of variables declaration//GEN-END:variables
 }

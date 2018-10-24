@@ -5,6 +5,11 @@
  */
 package omninotes;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
 /**
  *
  * @author Hwie
@@ -16,7 +21,40 @@ public class TrashUI extends javax.swing.JFrame {
      */
     public TrashUI() {
         initComponents();
+        this.getNotes();
     }
+    
+    public void getNotes(){
+        NoteControl nc = new NoteControl();        
+        LinkedList<Note> myNotes = new LinkedList<Note>();
+        myNotes = nc.getTrash();        
+
+        Iterator<Note> itr=myNotes.iterator();  
+        if (myNotes.size() > 0)  {            
+            ((DefaultTableModel)trashNotesTable.getModel()).setRowCount(0);    //clear table
+
+            TableColumnModel tcm = trashNotesTable.getColumnModel();
+//            tcm.removeColumn( tcm.getColumn(0) ); //hide id column
+//            tcm.removeColumn( tcm.getColumn(1) ); //hide content column
+//            tcm.removeColumn( tcm.getColumn(1) ); //hide is_active column
+
+
+            DefaultTableModel model = (DefaultTableModel) trashNotesTable.getModel();
+            //add data to notes table
+            while(itr.hasNext()){                        
+                Note current = itr.next();
+                int id = current.getNoteId();
+                String title = current.getTitle();                
+//                String content = current.getContent();
+//                int isArchive = current.getIsArchived();
+                
+//                Object[] row = { id, title, content, isArchive };
+                Object[] row = { title };
+                model.addRow(row);
+            }
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,7 +68,7 @@ public class TrashUI extends javax.swing.JFrame {
         jDialog1 = new javax.swing.JDialog();
         Trash = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        trashList = new javax.swing.JTable();
+        trashNotesTable = new javax.swing.JTable();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -48,7 +86,7 @@ public class TrashUI extends javax.swing.JFrame {
         Trash.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         Trash.setText("Trash");
 
-        trashList.setModel(new javax.swing.table.DefaultTableModel(
+        trashNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -64,10 +102,18 @@ public class TrashUI extends javax.swing.JFrame {
                 {null}
             },
             new String [] {
-                "File"
+                "TItle"
             }
-        ));
-        jScrollPane1.setViewportView(trashList);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(trashNotesTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,6 +181,6 @@ public class TrashUI extends javax.swing.JFrame {
     private javax.swing.JLabel Trash;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable trashList;
+    private javax.swing.JTable trashNotesTable;
     // End of variables declaration//GEN-END:variables
 }

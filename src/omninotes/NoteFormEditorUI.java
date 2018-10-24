@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package omninotes;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -15,10 +16,10 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
      * Creates new form NoteFormEditorUI
      */
     public NoteFormEditorUI() {
-        initComponents();
+        initComponents();        
     }
     
-    private int noteId;
+    private int noteId = -1;
 
     public int getNoteId() {
         return noteId;
@@ -90,16 +91,36 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
         });
 
         categoryBtn.setText("Category");
+        categoryBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryBtnActionPerformed(evt);
+            }
+        });
 
         attachmentBtn.setText("Attachment");
+        attachmentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attachmentBtnActionPerformed(evt);
+            }
+        });
 
         reminderBtn.setText("Reminder");
+        reminderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reminderBtnActionPerformed(evt);
+            }
+        });
 
         archiveStatus.setText("Not Archived");
         archiveStatus.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         archiveStatus.setEnabled(false);
 
         archiveBtn.setText("Archive");
+        archiveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                archiveBtnMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,13 +183,43 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
            
         
     }//GEN-LAST:event_backBtnActionPerformed
-
+//save current note
     private void backBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseClicked
         NoteEditor ne = new NoteEditor();                
-        ne.saveNote(titleInput.getText(), contentInput.getText(), this.mode, this.noteId);               
-        this.setVisible(false);
-        ne.openMainMenu();
+        ne.saveNote(titleInput.getText(), contentInput.getText(), this.mode, this.noteId);   //save current typed note       
+        NoteControl nc = new NoteControl();
+        nc.openMainMenu();      //open mainmenu, show active notes
+        this.dispose();         //destroy this object
     }//GEN-LAST:event_backBtnMouseClicked
+    //archive a note
+    private void archiveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_archiveBtnMouseClicked
+        //there has to be content before archiving a note!
+        if (this.noteId == -1 && "".equals(this.titleInput.getText().trim()) && "".equals(this.contentInput.getText().trim()) ) {
+            showMessageDialog(null, "Please fill in the note!");
+            return;
+        }        
+
+        NoteEditor ne = new NoteEditor();       //instantiate noteeditor (controller)
+        NoteControl nc = new NoteControl();
+        ne.archiveNote(this.noteId);            //call function to archive
+        nc.openMainMenu();                      //back to mainmenu                
+        this.dispose();                         //destroy noteformeditor
+        
+        
+    }//GEN-LAST:event_archiveBtnMouseClicked
+
+    private void attachmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachmentBtnActionPerformed
+        
+        System.out.println("Clicked on attachment!");
+    }//GEN-LAST:event_attachmentBtnActionPerformed
+
+    private void categoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryBtnActionPerformed
+        System.out.println("Clicked on category!");
+    }//GEN-LAST:event_categoryBtnActionPerformed
+
+    private void reminderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reminderBtnActionPerformed
+        System.out.println("Clicked on reminder!");
+    }//GEN-LAST:event_reminderBtnActionPerformed
 
     
     public void setInput(String title, String content, int archiveStatus){

@@ -5,17 +5,54 @@
  */
 package omninotes;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
 /**
  *
  * @author Hwie
  */
-public class ArchieveUI extends javax.swing.JFrame {
+public class ArchiveUI extends javax.swing.JFrame {
 
     /**
      * Creates new form ArchieveUI
      */
-    public ArchieveUI() {
+    public ArchiveUI() {
         initComponents();
+        this.getNotes();
+    }
+    
+    public void getNotes(){
+        NoteControl nc = new NoteControl();        
+        LinkedList<Note> myNotes = new LinkedList<Note>();
+        myNotes = nc.getArchive();        
+
+        Iterator<Note> itr=myNotes.iterator();  
+        if (myNotes.size() > 0)  {            
+            ((DefaultTableModel)archiveNotesTable.getModel()).setRowCount(0);    //clear table
+
+            TableColumnModel tcm = archiveNotesTable.getColumnModel();
+//            tcm.removeColumn( tcm.getColumn(0) ); //hide id column
+//            tcm.removeColumn( tcm.getColumn(1) ); //hide content column
+//            tcm.removeColumn( tcm.getColumn(1) ); //hide is_active column
+
+
+            DefaultTableModel model = (DefaultTableModel) archiveNotesTable.getModel();
+            //add data to notes table
+            while(itr.hasNext()){                        
+                Note current = itr.next();
+                int id = current.getNoteId();
+                String title = current.getTitle();                
+//                String content = current.getContent();
+//                int isArchive = current.getIsArchived();
+                
+//                Object[] row = { id, title, content, isArchive };
+                Object[] row = { title };
+                model.addRow(row);
+            }
+        }
     }
 
     /**
@@ -29,14 +66,14 @@ public class ArchieveUI extends javax.swing.JFrame {
 
         Archieve = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        archieveList = new javax.swing.JTable();
+        archiveNotesTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Archieve.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         Archieve.setText("Archieve");
 
-        archieveList.setModel(new javax.swing.table.DefaultTableModel(
+        archiveNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -55,7 +92,7 @@ public class ArchieveUI extends javax.swing.JFrame {
                 "File"
             }
         ));
-        jScrollPane1.setViewportView(archieveList);
+        jScrollPane1.setViewportView(archiveNotesTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,27 +135,28 @@ public class ArchieveUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ArchieveUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ArchiveUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ArchieveUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ArchiveUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ArchieveUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ArchiveUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ArchieveUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ArchiveUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ArchieveUI().setVisible(true);
+                new ArchiveUI().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Archieve;
-    private javax.swing.JTable archieveList;
+    private javax.swing.JTable archiveNotesTable;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

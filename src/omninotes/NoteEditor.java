@@ -139,10 +139,18 @@ public class NoteEditor {
     public void closeNoteEditorUI(){
         
     }
+        
     
-    public void openMainMenu(){
-        MainMenuUI mm = new MainMenuUI();
-        mm.setVisible(true);
+    void archiveNote(int noteId) {
+        String sql = "UPDATE post SET is_archive = 1, is_active = 0 WHERE id_note = ?";
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, noteId);        
+            preparedStatement.executeUpdate();            
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+       
     }
 
 

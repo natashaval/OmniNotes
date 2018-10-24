@@ -143,16 +143,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Category"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="categoryBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="attachmentBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Attachment"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="attachmentBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="reminderBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reminder"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reminderBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="archiveStatus">
       <Properties>
@@ -167,6 +176,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Archive"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="archiveBtnMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -30,15 +30,57 @@ public class NoteControl {
     public List<Note> filter (Integer categoryId) {return null; }
     public void restore(Note note) {}
     public void delete(Note note){}
-    public List<Note> getActiveNotes(){return null;}
-    public List<Note> getTrash(){return null;}
-    public List<Note> getArchive(){return null;}
+    public List<Note> getActiveNotes(){return null;}    
+    public LinkedList<Note> getArchive(){    
+      LinkedList<Note> myNotes = new LinkedList<Note>();
+        try{
+            Statement stmt = conn.createStatement();  
+            ResultSet rs=stmt.executeQuery("select * from post where is_archive = 1");                         
+            
+            while(rs.next()){
+                Note note = new Note();
+                note.setNoteId(rs.getInt(1));
+                note.setTitle(rs.getString(2));
+                note.setContent(rs.getString(3));   
+                note.setIsArchived(rs.getInt(4));
+                myNotes.add(note);
+            }
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return myNotes;
+    }
+    
+    public LinkedList<Note> getTrash(){
+        LinkedList<Note> myNotes = new LinkedList<Note>();
+        try{
+            Statement stmt = conn.createStatement();  
+            ResultSet rs=stmt.executeQuery("select * from post where is_trash = 1");                         
+            
+            while(rs.next()){
+                Note note = new Note();
+                note.setNoteId(rs.getInt(1));
+                note.setTitle(rs.getString(2));
+                note.setContent(rs.getString(3));   
+                note.setIsArchived(rs.getInt(4));
+                myNotes.add(note);
+            }
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return myNotes;
+    }
     
     public NoteControl(){
         conn = db.newConnection();
     }
     
-    public void openMainMenu(){} // tidak tahu karena boundary
+    public void openMainMenu(){
+        MainMenuUI mm = new MainMenuUI();
+        mm.setVisible(true);
+    }
     
     //returns LinkedList of notes, get active notes
     public LinkedList<Note> getNotes(){
@@ -58,5 +100,15 @@ public class NoteControl {
             System.out.println(e);
         }        
         return myNotes;        
+    }
+    
+    public void openArchiveUI(){
+        ArchiveUI archive = new ArchiveUI();
+        archive.setVisible(true);
+    }
+    
+    public void openTrashUI(){
+        TrashUI trash = new TrashUI();
+        trash.setVisible(true);
     }
 }
