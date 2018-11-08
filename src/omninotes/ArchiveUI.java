@@ -71,7 +71,7 @@ public class ArchiveUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Archieve.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        Archieve.setText("Archieve");
+        Archieve.setText("Archive");
 
         archiveNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -89,9 +89,24 @@ public class ArchiveUI extends javax.swing.JFrame {
                 {null}
             },
             new String [] {
-                "File"
+                "Title"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(archiveNotesTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

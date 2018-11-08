@@ -74,7 +74,7 @@ public class MainMenuUI extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true, true
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -153,19 +153,23 @@ public class MainMenuUI extends javax.swing.JFrame {
 
         //on click active notes
     private void myNotesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myNotesTableMouseClicked
-        int noteId = Integer.parseInt(myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 0).toString());
-        String title = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 1).toString();        
-        String content = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 2).toString();
-        int isActive = Integer.parseInt(myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 3).toString());
-        Note note = new Note();
-        note.setTitle(title);
-        note.setContent(content);
-        note.setNoteId(noteId);
-        System.out.println(noteId);
-        
-        NoteEditor ne = new NoteEditor();
-        ne.openNoteEditorUI(note, "update");
-        
+        try{
+            int noteId = Integer.parseInt(myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 0).toString());
+            String title = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 1).toString();        
+            String content = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 2).toString();
+            int isActive = Integer.parseInt(myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 3).toString());
+            Note note = new Note();
+            note.setTitle(title);
+            note.setContent(content);
+            note.setNoteId(noteId);
+            System.out.println(noteId);
+
+            NoteEditor ne = new NoteEditor();
+            ne.openNoteEditorUI(note, "update");
+        }catch(Exception e){
+            System.out.println("No notes");   
+            return;
+        }        
         this.dispose();
     }//GEN-LAST:event_myNotesTableMouseClicked
 
