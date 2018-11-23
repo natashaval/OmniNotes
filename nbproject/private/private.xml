@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/ArchiveUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/MainMenuUI.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/Note.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/NoteState.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/Active.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/NoteFormEditorUI.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/Archive.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/Remove.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/NoteEditor.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/omninotes/NoteControl.java</file>
         </group>
     </open-files>
 </project-private>

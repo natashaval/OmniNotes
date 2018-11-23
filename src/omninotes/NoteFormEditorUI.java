@@ -18,7 +18,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     public NoteFormEditorUI() {
         initComponents();        
     }
-    
+    // flag to determine whether a note is selected or not. default -1, not selected    
     private int noteId = -1;
 
     public int getNoteId() {
@@ -186,7 +186,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
 //save current note
     private void backBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseClicked
         NoteEditor ne = new NoteEditor();                
-        ne.saveNote(titleInput.getText(), contentInput.getText(), this.mode, this.noteId);   //save current typed note       
+        ne.instantiateNote(titleInput.getText(), contentInput.getText(), this.mode, this.noteId);   //save current typed note       
         NoteControl nc = new NoteControl();
         nc.openMainMenu();      //open mainmenu, show active notes
         this.dispose();         //destroy this object
@@ -265,6 +265,8 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
             }
         });
     }
+//    
+//    NoteEditor ne = null;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton archiveBtn;

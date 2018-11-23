@@ -95,9 +95,10 @@ public class NoteControl {
                 note.setContent(rs.getString(3));   
                 note.setIsArchived(rs.getInt(4));
                 myNotes.add(note);
+                System.out.println("here");
             }
-        }catch(Exception e) {
-            System.out.println(e);
+        }catch(SQLException e) {
+            System.out.println(e.getMessage());
         }        
         return myNotes;        
     }

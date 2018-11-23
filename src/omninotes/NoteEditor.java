@@ -61,27 +61,12 @@ public class NoteEditor {
         
     }
     
-    public void saveNote(Note note){
-        
-    }
-    
-    public void saveNote(String title, String content, String mode, int noteId){
-        if ("".equals(title.trim()) || "".equals(content.trim())) {
-            return;
-        }
-        Note note = new Note();
-        note.setTitle(title);
-        note.setContent(content);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        Date date = new Date();
-        note.setCreatedDate(date);
-        note.setNoteId(noteId);
+    public void saveNote(Note note, String mode){
         String sql;
-        
-        
                
         try{            
-        if ("update".equals(mode)) {
+    
+            if ("update".equals(mode)) {
             sql = "UPDATE post SET title = ?, content = ? WHERE id_note = ?";
             
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -90,23 +75,27 @@ public class NoteEditor {
             preparedStatement.setInt(3, note.getNoteId());            
             preparedStatement.executeUpdate();       
             
-        }else{
-            sql = "INSERT INTO post (title, content, created_date)" +
-            "VALUES (?, ?, ?)";    
-            
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, note.getTitle());
-            preparedStatement.setString(2, note.getContent());
-            java.sql.Date sqlDate = new java.sql.Date(note.getCreatedDate().getTime());
-            preparedStatement.setDate(3, sqlDate);
-            preparedStatement.executeUpdate();        
-            
-            }             
+            }else{
+                sql = "INSERT INTO post (title, content, created_date)" +
+                "VALUES (?, ?, ?)";    
+
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, note.getTitle());
+                preparedStatement.setString(2, note.getContent());
+                java.sql.Date sqlDate = new java.sql.Date(note.getCreatedDate().getTime());
+                preparedStatement.setDate(3, sqlDate);
+                preparedStatement.executeUpdate();        
+
+                }             
         }
         catch(SQLException e){
             System.out.println(e.getCause());
             System.out.println(conn);
-        }        
+        }      
+    }
+    
+    public void saveNote(String title, String content, String mode, int noteId){
+        
     }
     
     public void addReminder(Note note){}
@@ -118,10 +107,18 @@ public class NoteEditor {
         nfe.setMode(mode);
     }
     
-    public void instantiateNote(String mode) {
-        NoteFormEditorUI nfe = new NoteFormEditorUI();
-        nfe.setVisible(true);
-        nfe.setMode(mode);
+    public void instantiateNote(String title, String content, String mode, int noteId) {
+        if ("".equals(title.trim()) || "".equals(content.trim())) {
+            return;
+        }
+        Note note = new Note();
+        note.setTitle(title);
+        note.setContent(content);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        Date date = new Date();
+        note.setCreatedDate(date);
+        note.setNoteId(noteId);        
+        this.saveNote(note, mode);
     }
     
     public void openNoteEditorUI(Note note, String mode) {
@@ -142,6 +139,9 @@ public class NoteEditor {
         
     
     void archiveNote(int noteId) {
+        Note note = new Note();
+        note.setState(new Active(note));
+        
         String sql = "UPDATE post SET is_archive = 1, is_active = 0 WHERE id_note = ?";
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -150,6 +150,8 @@ public class NoteEditor {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
+        
+        note.setState(new Archive(note));
        
     }
 

@@ -22,7 +22,7 @@ public class Note {
     private int isArchived;
 
     Note() {
-        
+       currentState = new Active(this);
     }
 
     public void addTitle(Integer noteId, String title){}
@@ -40,6 +40,9 @@ public class Note {
         this.isActive = isActive;
         this.inTrash = inTrash;
         this.isArchived = isArchived;
+            
+        currentState = new Active(this);
+        
     }
 
     
@@ -105,6 +108,19 @@ public class Note {
 
     public void setIsArchived(int isArchived) {
         this.isArchived = isArchived;
+        currentState.archiveNote();
     }
+    
+    
+    
+    //    User defined properties & methods 
+    //    State design pattern   
+    
+    private NoteState currentState = null;
+
+    public void setState(NoteState newState){
+        this.currentState = newState;                
+    }
+    
     
 }
