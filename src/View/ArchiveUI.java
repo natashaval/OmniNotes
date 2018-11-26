@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
+package View;
 
+import omninotes.Model.Note;
+import omninotes.Controller.NoteControl;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import omninotes.Controller.NoteEditor;
 
 /**
  *
@@ -34,9 +37,9 @@ public class ArchiveUI extends javax.swing.JFrame {
             ((DefaultTableModel)archiveNotesTable.getModel()).setRowCount(0);    //clear table
 
             TableColumnModel tcm = archiveNotesTable.getColumnModel();
-//            tcm.removeColumn( tcm.getColumn(0) ); //hide id column
-//            tcm.removeColumn( tcm.getColumn(1) ); //hide content column
-//            tcm.removeColumn( tcm.getColumn(1) ); //hide is_active column
+            tcm.removeColumn( tcm.getColumn(0) ); //hide id column
+            tcm.removeColumn( tcm.getColumn(1) ); //hide content column
+            tcm.removeColumn( tcm.getColumn(1) ); //hide is_active column
 
 
             DefaultTableModel model = (DefaultTableModel) archiveNotesTable.getModel();
@@ -45,11 +48,11 @@ public class ArchiveUI extends javax.swing.JFrame {
                 Note current = itr.next();
                 int id = current.getNoteId();
                 String title = current.getTitle();                
-//                String content = current.getContent();
-//                int isArchive = current.getIsArchived();
+                String content = current.getContent();
+                int isArchive = current.getIsArchived();
                 
-//                Object[] row = { id, title, content, isArchive };
-                Object[] row = { title };
+                Object[] row = { id, title, content, isArchive };
+//                Object[] row = { title };
                 model.addRow(row);
             }
         }
@@ -67,6 +70,9 @@ public class ArchiveUI extends javax.swing.JFrame {
         Archieve = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         archiveNotesTable = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,28 +81,28 @@ public class ArchiveUI extends javax.swing.JFrame {
 
         archiveNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Title"
+                "id", "Title", "content", "is_archive"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false
+                true, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -107,7 +113,31 @@ public class ArchiveUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        archiveNotesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                archiveNotesTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(archiveNotesTable);
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("Main Menu");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseClicked(evt);
+            }
+        });
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,11 +157,43 @@ public class ArchiveUI extends javax.swing.JFrame {
                 .addComponent(Archieve, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        NoteControl nc = new NoteControl();
+        nc.openMainMenu();
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+     
+    }//GEN-LAST:event_jMenuItem1MouseClicked
+
+//    get note details on click
+    private void archiveNotesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_archiveNotesTableMouseClicked
+        try{
+            int noteId = Integer.parseInt(archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 0).toString());
+            String title = archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 1).toString();        
+            String content = archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 2).toString();
+            int isActive = Integer.parseInt(archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 3).toString());
+            Note note = new Note();
+            note.setTitle(title);
+            note.setContent(content);
+            note.setNoteId(noteId);
+            note.setIsArchived(isActive);
+
+            NoteEditor ne = new NoteEditor();
+            ne.openNoteEditorUI(note, "update");
+        }catch(Exception e){
+            System.out.println(e);   
+            return;
+        }        
+        this.dispose();
+    }//GEN-LAST:event_archiveNotesTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -172,6 +234,9 @@ public class ArchiveUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Archieve;
     private javax.swing.JTable archiveNotesTable;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

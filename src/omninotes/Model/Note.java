@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
+package omninotes.Model;
 
 import java.util.Date;
+import omninotes.Active;
+import omninotes.NoteState;
 
 /**
  *
@@ -21,7 +23,7 @@ public class Note {
     private int inTrash;
     private int isArchived;
 
-    Note() {
+    public Note() {
        currentState = new Active(this);
     }
 

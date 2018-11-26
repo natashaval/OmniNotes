@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
+package View;
+import javax.swing.JFileChooser;
+import omninotes.Controller.NoteControl;
+import omninotes.Controller.NoteEditor;
 import static javax.swing.JOptionPane.showMessageDialog;
+import omninotes.Model.Note;
 
 /**
  *
@@ -17,6 +21,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
      */
     public NoteFormEditorUI() {
         initComponents();        
+        
     }
     // flag to determine whether a note is selected or not. default -1, not selected    
     private int noteId = -1;
@@ -50,6 +55,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        datePicker = new org.jdesktop.swingx.plaf.basic.BasicDatePickerUI();
         jScrollPane1 = new javax.swing.JScrollPane();
         contentInput = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -62,6 +68,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
         reminderBtn = new javax.swing.JButton();
         archiveStatus = new javax.swing.JTextField();
         archiveBtn = new javax.swing.JButton();
+        unArchiveBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,11 +86,6 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
 
         backBtn.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         backBtn.setText("Back");
-        backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backBtnMouseClicked(evt);
-            }
-        });
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
@@ -116,9 +118,16 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
         archiveStatus.setEnabled(false);
 
         archiveBtn.setText("Archive");
-        archiveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                archiveBtnMouseClicked(evt);
+        archiveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                archiveBtnActionPerformed(evt);
+            }
+        });
+
+        unArchiveBtn.setText("Un-archive");
+        unArchiveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unArchiveBtnActionPerformed(evt);
             }
         });
 
@@ -149,7 +158,10 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
                         .addComponent(titleLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))))
+                        .addGap(48, 48, 48))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(unArchiveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +184,9 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
                     .addComponent(attachmentBtn)
                     .addComponent(categoryBtn)
                     .addComponent(reminderBtn))
-                .addGap(263, 263, 263))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(unArchiveBtn)
+                .addGap(226, 226, 226))
         );
 
         pack();
@@ -180,36 +194,17 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-           
-        
-    }//GEN-LAST:event_backBtnActionPerformed
-//save current note
-    private void backBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseClicked
         NoteEditor ne = new NoteEditor();                
         ne.instantiateNote(titleInput.getText(), contentInput.getText(), this.mode, this.noteId);   //save current typed note       
         NoteControl nc = new NoteControl();
         nc.openMainMenu();      //open mainmenu, show active notes
         this.dispose();         //destroy this object
-    }//GEN-LAST:event_backBtnMouseClicked
-    //archive a note
-    private void archiveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_archiveBtnMouseClicked
-        //there has to be content before archiving a note!
-        if (this.noteId == -1 && "".equals(this.titleInput.getText().trim()) && "".equals(this.contentInput.getText().trim()) ) {
-            showMessageDialog(null, "Please fill in the note!");
-            return;
-        }        
-
-        NoteEditor ne = new NoteEditor();       //instantiate noteeditor (controller)
-        NoteControl nc = new NoteControl();
-        ne.archiveNote(this.noteId);            //call function to archive
-        nc.openMainMenu();                      //back to mainmenu                
-        this.dispose();                         //destroy noteformeditor
         
-        
-    }//GEN-LAST:event_archiveBtnMouseClicked
+    }//GEN-LAST:event_backBtnActionPerformed
 
     private void attachmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachmentBtnActionPerformed
-        
+    final JFileChooser fc = new JFileChooser();        
+    fc.showOpenDialog(this);
         System.out.println("Clicked on attachment!");
     }//GEN-LAST:event_attachmentBtnActionPerformed
 
@@ -221,14 +216,46 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
         System.out.println("Clicked on reminder!");
     }//GEN-LAST:event_reminderBtnActionPerformed
 
+    private void archiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveBtnActionPerformed
+
+        System.out.println("aint working");
+        //there has to be content before archiving a note!
+        if (this.noteId == -1 && "".equals(this.titleInput.getText().trim()) && "".equals(this.contentInput.getText().trim()) ) {
+            showMessageDialog(null, "Please fill in the note!");
+            return;
+        }        
+
+        NoteEditor ne = new NoteEditor();       //instantiate noteeditor (controller)
+        NoteControl nc = new NoteControl();
+        ne.archiveNote(this.noteId);            //call function to archive
+        nc.openMainMenu();                      //back to mainmenu                
+        this.dispose();                         //destroy noteformeditor
+    }//GEN-LAST:event_archiveBtnActionPerformed
+
+    private void unArchiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unArchiveBtnActionPerformed
+
+        NoteEditor ne = new NoteEditor();
+        Note note = new Note();
+        note.setTitle(this.titleInput.getText());
+        note.setNoteId(this.noteId);
+        ne.unArchiveNote(note);
+        this.dispose();
+    }//GEN-LAST:event_unArchiveBtnActionPerformed
+
     
     public void setInput(String title, String content, int archiveStatus){
         titleInput.setText(title);
         contentInput.setText(content);
+        System.out.println("archive stat "+ archiveStatus);
         if (archiveStatus == 1) {
             this.archiveStatus.setText("Archived");
+            this.unArchiveBtn.setEnabled(true);
+            this.archiveBtn.setEnabled(false);
+            this.backBtn.setEnabled(false);
+
         }else{
             this.archiveStatus.setText("Not Archived");
+            this.unArchiveBtn.setEnabled(false);
         }
     }
     /**
@@ -276,10 +303,17 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     private javax.swing.JButton categoryBtn;
     private javax.swing.JTextArea contentInput;
     private javax.swing.JLabel contentLabel;
+    private org.jdesktop.swingx.plaf.basic.BasicDatePickerUI datePicker;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton reminderBtn;
     private javax.swing.JTextPane titleInput;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton unArchiveBtn;
     // End of variables declaration//GEN-END:variables
 }
+
+
+
+
+

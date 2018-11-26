@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
+package View;
 
+import omninotes.Model.Note;
+import omninotes.Controller.NoteControl;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;

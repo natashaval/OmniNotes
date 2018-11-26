@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
+package omninotes.Controller;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +12,19 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import View.ArchiveUI;
+import View.ArchiveUI;
+import Config.DBConnection;
+import Config.DBConnection;
+import View.MainMenuUI;
+import View.MainMenuUI;
+import omninotes.Model.Note;
+import omninotes.Model.Note;
+import View.TrashUI;
+import View.TrashUI;
+import java.util.concurrent.TimeUnit;
+
+import javafx.concurrent.Task;
 
 /**
  *
@@ -83,8 +96,10 @@ public class NoteControl {
     }
     
     //returns LinkedList of notes, get active notes
-    public LinkedList<Note> getNotes(){
+//  public LinkedList<Note> getNotes() throws InterruptedException{
+    public LinkedList<Note> getNotes() {
         LinkedList<Note> myNotes = new LinkedList<Note>();
+        
         try{
             Statement stmt = conn.createStatement();  
             ResultSet rs=stmt.executeQuery("select * from post where is_active = 1");                         
@@ -95,12 +110,17 @@ public class NoteControl {
                 note.setContent(rs.getString(3));   
                 note.setIsArchived(rs.getInt(4));
                 myNotes.add(note);
-                System.out.println("here");
+                System.out.println(note.getTitle());
             }
         }catch(SQLException e) {
             System.out.println(e.getMessage());
         }        
-        return myNotes;        
+             
+ 
+
+        return myNotes;
+        
+      
     }
     
     public void openArchiveUI(){
@@ -112,4 +132,5 @@ public class NoteControl {
         TrashUI trash = new TrashUI();
         trash.setVisible(true);
     }
+    
 }

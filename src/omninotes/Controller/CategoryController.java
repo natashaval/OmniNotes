@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
+package omninotes.Controller;
+
+import omninotes.Model.Category;
+import omninotes.Model.Category;
 
 /**
  *

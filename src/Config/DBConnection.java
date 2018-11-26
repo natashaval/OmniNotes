@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
+package Config;
 import java.sql.*;  
 /**
  *
@@ -16,7 +16,7 @@ public class DBConnection {
     }
     
     //opens a new connecting to DB
-    public Connection newConnection(){        
+    public Connection newConnection() {        
         try{
             Class.forName("com.mysql.jdbc.Driver");  
             con = DriverManager.getConnection(  
@@ -29,7 +29,7 @@ public class DBConnection {
         return con; //returnn connection obj
     }  
     
-    public boolean closeConnection(){
+    public boolean closeConnection() {
         try{
          this.con.close();   
         }catch(Exception e){

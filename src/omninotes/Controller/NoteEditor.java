@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
+package omninotes.Controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +11,20 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import omninotes.Active;
+import omninotes.Active;
+import omninotes.Archive;
+import omninotes.Archive;
+import omninotes.Model.Category;
+import omninotes.Model.Category;
+import Config.DBConnection;
+import Config.DBConnection;
+import View.MainMenuUI;
+import View.MainMenuUI;
+import omninotes.Model.Note;
+import omninotes.Model.Note;
+import View.NoteFormEditorUI;
+import View.NoteFormEditorUI;
 
 /**
  *
@@ -46,7 +60,7 @@ public class NoteEditor {
     }
     
     public void shareNote(Note note){
-        
+            
     }
     
     public void archiveNote(Note note){
@@ -60,7 +74,7 @@ public class NoteEditor {
     public void discardChanges(Note note){
         
     }
-    
+//    saves and updates note, depends on mode
     public void saveNote(Note note, String mode){
         String sql;
                
@@ -129,7 +143,24 @@ public class NoteEditor {
         nfe.setNoteId(note.getNoteId());
     }
     
-    public void unArchiveNote(Note note) {}
+    public void unArchiveNote(Note note) {        
+        note.setState(new Archive(note));
+        
+        String sql = "UPDATE post SET is_archive = 0, is_active = 1 WHERE id_note = ?";
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, note.getNoteId());        
+            preparedStatement.executeUpdate();            
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        
+        note.setState(new Active(note));
+        System.out.println("Note has been unarchived");
+        NoteControl nc = new NoteControl();
+        nc.openArchiveUI();
+    }
     
     public void addChecklist() {}
 
@@ -138,7 +169,7 @@ public class NoteEditor {
     }
         
     
-    void archiveNote(int noteId) {
+    public void archiveNote(int noteId) {
         Note note = new Note();
         note.setState(new Active(note));
         

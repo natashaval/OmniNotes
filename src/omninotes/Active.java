@@ -5,6 +5,8 @@
  */
 package omninotes;
 
+import omninotes.Model.Note;
+
 /**
  *
  * @author adis

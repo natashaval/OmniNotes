@@ -1,16 +1,25 @@
+package View;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package omninotes;
 
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import omninotes.Model.Note;
+import omninotes.Controller.NoteControl;
+import omninotes.Controller.NoteEditor;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.concurrent.CompletableFuture;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 /**
  *
  * @author Natasha
@@ -22,7 +31,9 @@ public class MainMenuUI extends javax.swing.JFrame {
      */
     public MainMenuUI() {
         initComponents();
-        this.getNotes();        
+        this.getNotes();
+        this.fillJTree();
+            
     }
         
 
@@ -38,7 +49,7 @@ public class MainMenuUI extends javax.swing.JFrame {
         jFormattedTextField6 = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        categoryTree = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
         myNotesTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -57,7 +68,7 @@ public class MainMenuUI extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jTree1);
+        jScrollPane1.setViewportView(categoryTree);
 
         myNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -185,7 +196,8 @@ public class MainMenuUI extends javax.swing.JFrame {
         nc.openTrashUI();
         this.dispose();
     }//GEN-LAST:event_trashMenuActionPerformed
-
+    
+//    public CompletableFuture<Void> getNotes() throws InterruptedException{
     public void getNotes(){
         NoteControl nc = new NoteControl();
         LinkedList<Note> myNotes = new LinkedList<Note>();
@@ -213,8 +225,104 @@ public class MainMenuUI extends javax.swing.JFrame {
                 Object[] row = { id, title, content, isArchive };
                 model.addRow(row);
             }
+//            this.j
         }                     
     }
+    
+//        @SuppressWarnings("CallToThreadDumpStack")
+//    public final void pop_tree() {
+//        try {
+// 
+//            try {
+//                con = Database.getConnection();
+//                stm = con.createStatement();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//            ArrayList list = new ArrayList();
+//            list.add("Category List");
+//            String sql = "SELECT * from category";
+// 
+//            ResultSet rs = stm.executeQuery(sql);
+// 
+//            while (rs.next()) {
+//                Object value[] = {rs.getString(1), rs.getString(2)};
+//                list.add(value);
+//            }
+//            Object hierarchy[] = list.toArray();
+//            DefaultMutableTreeNode root = processHierarchy(hierarchy);
+// 
+//            DefaultTreeModel treeModel = new DefaultTreeModel(root);
+//            cat_tree.setModel(treeModel);
+//        } catch (Exception e) {
+//        }
+// 
+//    }
+//    
+//       @SuppressWarnings("CallToThreadDumpStack")
+//    public DefaultMutableTreeNode processHierarchy(Object[] hierarchy) {
+//        DefaultMutableTreeNode node = new DefaultMutableTreeNode(hierarchy[0]);
+//        try {
+//            int ctrow = 0;
+//            int i = 0;
+//            try {
+// 
+//                try {
+//                    con = Database.getConnection();
+//                    stm = con.createStatement();
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//                String sql = "SELECT catid, catname from category";
+//                ResultSet rs = stm.executeQuery(sql);
+// 
+//                while (rs.next()) {
+//                    ctrow = rs.getRow();
+//                }
+//                String L1Nam[] = new String[ctrow];
+//                String L1Id[] = new String[ctrow];
+//                ResultSet rs1 = stm.executeQuery(sql);
+//                while (rs1.next()) {
+//                    L1Nam[i] = rs1.getString("catname");
+//                    L1Id[i] = rs1.getString("catid");
+//                    i++;
+//                }
+//                DefaultMutableTreeNode child, grandchild;
+//                for (int childIndex = 0; childIndex < L1Nam.length; childIndex++) {
+//                    child = new DefaultMutableTreeNode(L1Nam[childIndex]);
+//                    node.add(child);//add each created child to root
+//                    String sql2 = "SELECT scatname from subcategory where catid= '" + L1Id[childIndex] + "' ";
+//                    ResultSet rs3 = stm.executeQuery(sql2);
+//                    while (rs3.next()) {
+//                        grandchild = new DefaultMutableTreeNode(rs3.getString("scatname"));
+//                        child.add(grandchild);//add each grandchild to each child
+//                    }
+//                }
+// 
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+// 
+//        } catch (Exception e) {
+//        }
+// 
+//        return (node);
+//    }
+    
+    public void fillJTree(){
+        DefaultMutableTreeNode cats = new DefaultMutableTreeNode("categories");
+        DefaultMutableTreeNode cats1 = new DefaultMutableTreeNode("categories1");
+        DefaultMutableTreeNode cats1_1 = new DefaultMutableTreeNode("categories 1.1");
+        cats1.add(cats1_1);
+        cats.add(cats1);
+        
+        DefaultTreeModel dtm = new DefaultTreeModel(cats);
+        this.categoryTree.setModel(dtm);
+                
+    
+    
+    }
+ 
     
     /**
      * @param args the command line arguments
@@ -248,21 +356,24 @@ public class MainMenuUI extends javax.swing.JFrame {
             public void run() {
                 new MainMenuUI().setVisible(true);
             }
-        });        
+        });
     }
+
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem archiveMenu;
+    private javax.swing.JTree categoryTree;
     private javax.swing.JButton jButton1;
     private javax.swing.JFormattedTextField jFormattedTextField6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree1;
     private javax.swing.JTable myNotesTable;
     private javax.swing.JMenuItem trashMenu;
     // End of variables declaration//GEN-END:variables
+
 }
+                
