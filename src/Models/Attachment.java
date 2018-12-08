@@ -22,6 +22,16 @@ public class Attachment {
         this.location = location;
         this.fileType = fileType;
     }
+    
+    public Attachment(String name, String location, String fileType) {
+        this.attachmentId = attachmentId;
+        this.name = name;
+        this.location = location;
+        this.fileType = fileType;
+    }
+    
+    public Attachment() { }
+
 
     public Integer getAttachmentId() {
         return attachmentId;

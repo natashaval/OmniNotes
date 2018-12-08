@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -23,37 +23,40 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="254" max="-2" attributes="0"/>
-              <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="AddFile" min="-2" pref="153" max="-2" attributes="0"/>
                   <Component id="AddPhoto" min="-2" pref="153" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="AddVideo" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                  <Component id="AddSketch" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="AddVideo" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                          <Component id="AddSketch" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="AddLocation" min="-2" pref="153" max="-2" attributes="0"/>
+                          <Component id="AddAudio" min="-2" pref="153" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="AddAudio" min="-2" pref="153" max="-2" attributes="0"/>
-                  <Component id="AddLocation" min="-2" pref="153" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+              <EmptySpace pref="69" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="titleLabel" min="-2" pref="51" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="AddAudio" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="AddVideo" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
@@ -65,7 +68,7 @@
                   <Component id="AddSketch" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="AddLocation" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="148" max="32767" attributes="0"/>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,7 +76,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="AddPhoto">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AddPhoto"/>
+        <Property name="text" type="java.lang.String" value="Add Photo"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddPhotoActionPerformed"/>
@@ -81,36 +84,51 @@
     </Component>
     <Component class="javax.swing.JLabel" name="titleLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Attachment"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="24" style="1"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Attachment"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="AddFile">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AddFile"/>
+        <Property name="text" type="java.lang.String" value="Add File"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddFileActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="AddSketch">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AddSketch"/>
+        <Property name="text" type="java.lang.String" value="Add Sketch"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddSketchActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="AddVideo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AddVideo"/>
+        <Property name="text" type="java.lang.String" value="Add Video"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddVideoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="AddLocation">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AddLocation"/>
+        <Property name="text" type="java.lang.String" value="Add Location"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddLocationActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="AddAudio">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AddAudio"/>
+        <Property name="text" type="java.lang.String" value="Add Audio"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddAudioActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

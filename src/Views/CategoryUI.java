@@ -74,6 +74,7 @@ public class CategoryUI extends javax.swing.JFrame {
         addCatBtn = new javax.swing.JButton();
         catSelect = new javax.swing.JComboBox<>();
         saveBtn = new javax.swing.JButton();
+        uncategorizeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Omni Notes - Category");
@@ -117,6 +118,15 @@ public class CategoryUI extends javax.swing.JFrame {
             }
         });
 
+        uncategorizeBtn.setText("Uncategorize");
+        uncategorizeBtn.setBackground(new java.awt.Color(255, 0, 51));
+        uncategorizeBtn.setForeground(new java.awt.Color(255, 255, 255));
+        uncategorizeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uncategorizeBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,7 +141,8 @@ public class CategoryUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addCatBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                     .addComponent(catSelect, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(saveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(saveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(uncategorizeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -151,7 +162,9 @@ public class CategoryUI extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addComponent(catSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(uncategorizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
@@ -188,6 +201,10 @@ public class CategoryUI extends javax.swing.JFrame {
         this.selectCategory();
         this.dispose();
     }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void uncategorizeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uncategorizeBtnActionPerformed
+        this.uncategorize(this.noteId);
+    }//GEN-LAST:event_uncategorizeBtnActionPerformed
 
     private void getCategories(){        
         LinkedList<Category> cats = null;
@@ -230,6 +247,16 @@ public class CategoryUI extends javax.swing.JFrame {
             }
         }
         
+        this.dispose();
+    }
+    
+    public void uncategorize(int noteId){
+        try {
+            this.cc.uncategorize(noteId);
+
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }
     
@@ -278,6 +305,7 @@ public class CategoryUI extends javax.swing.JFrame {
     private com.github.lgooddatepicker.components.DateTimePicker dateTimePicker1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton saveBtn;
+    private javax.swing.JButton uncategorizeBtn;
     // End of variables declaration//GEN-END:variables
 }
 

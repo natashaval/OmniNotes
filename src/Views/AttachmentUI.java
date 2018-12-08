@@ -5,16 +5,33 @@
  */
 package Views;
 
+import Controllers.AttachmentController;
+import Models.Attachment;
+import java.io.File;
+import java.io.FileFilter;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Hwie
  */
 public class AttachmentUI extends javax.swing.JFrame {
-
+    
+    private AttachmentController ac = null;
+    JFileChooser fc = null;
+       
     /**
      * Creates new form AttachmentUI
      */
-    public AttachmentUI() {
+    public AttachmentUI(AttachmentController ac) {
+//        ac = new AttachmentController();
+        this.ac = ac;
+        initComponents();
+    }
+
+    private AttachmentUI() {
         initComponents();
     }
 
@@ -35,9 +52,9 @@ public class AttachmentUI extends javax.swing.JFrame {
         AddLocation = new javax.swing.JButton();
         AddAudio = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        AddPhoto.setText("AddPhoto");
+        AddPhoto.setText("Add Photo");
         AddPhoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddPhotoActionPerformed(evt);
@@ -47,45 +64,71 @@ public class AttachmentUI extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         titleLabel.setText("Attachment");
 
-        AddFile.setText("AddFile");
+        AddFile.setText("Add File");
+        AddFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddFileActionPerformed(evt);
+            }
+        });
 
-        AddSketch.setText("AddSketch");
+        AddSketch.setText("Add Sketch");
+        AddSketch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddSketchActionPerformed(evt);
+            }
+        });
 
-        AddVideo.setText("AddVideo");
+        AddVideo.setText("Add Video");
+        AddVideo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddVideoActionPerformed(evt);
+            }
+        });
 
-        AddLocation.setText("AddLocation");
+        AddLocation.setText("Add Location");
+        AddLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddLocationActionPerformed(evt);
+            }
+        });
 
-        AddAudio.setText("AddAudio");
+        AddAudio.setText("Add Audio");
+        AddAudio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddAudioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(254, 254, 254)
-                .addComponent(titleLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(AddFile, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AddPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AddVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddSketch, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AddAudio, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(74, 74, 74))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AddVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AddSketch, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(AddLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AddAudio, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(titleLabel)))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addContainerGap()
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddAudio, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AddVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -95,16 +138,76 @@ public class AttachmentUI extends javax.swing.JFrame {
                     .addComponent(AddFile, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AddSketch, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AddLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddPhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPhotoActionPerformed
-        // TODO add your handling code here:
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Photos", "jpg", "jpeg", "png");
+        this.openAttachmentChooser(filter);
     }//GEN-LAST:event_AddPhotoActionPerformed
 
+    private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
+        FileNameExtensionFilter filter = null;
+        this.openAttachmentChooser(filter);                
+    }//GEN-LAST:event_AddFileActionPerformed
+
+    private void AddVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddVideoActionPerformed
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "mp4", "mpeg", "wav");
+        this.openAttachmentChooser(filter);
+    }//GEN-LAST:event_AddVideoActionPerformed
+
+    private void AddAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddAudioActionPerformed
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Audios", "mp3", "mp2");
+        this.openAttachmentChooser(filter);
+    }//GEN-LAST:event_AddAudioActionPerformed
+
+    private void AddSketchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddSketchActionPerformed
+        FileNameExtensionFilter filter = null;
+        this.openAttachmentChooser(filter);
+    }//GEN-LAST:event_AddSketchActionPerformed
+
+    private void AddLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddLocationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddLocationActionPerformed
+    
+    private void openAttachmentChooser(FileNameExtensionFilter filter) {
+        System.out.println(this.ac.test);
+        System.out.println(this.ac.nfeUI.getNoteId());
+        JDialog dialog = new JDialog();
+        final JFileChooser fc = new JFileChooser();                  
+        if (filter != null) {
+            
+        }
+        fc.setFileFilter(filter);
+                
+        int ret = fc.showOpenDialog(dialog);
+        this.selectFile(ret, fc);
+    }
+    
+        public void selectFile(int ret, JFileChooser fc) {
+        String fileName = "", filePath = "";
+        
+        
+        if (ret == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            fileName = file.getName();
+            filePath = file.getAbsolutePath();
+//            System.out.println(fileName);
+//            System.out.println(filePath);
+//            System.out.println("Clicked on attachment!");   
+//            System.out.println(this.getFileExtension(file));
+               
+            Attachment a = new Attachment(fileName, filePath, this.getFileExtension(file));
+            System.out.println(a);
+            this.ac.setAttachment(a);
+//                    System.out.println(this.ac.nfeUI.getNoteId());
+
+        }  
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -149,4 +252,11 @@ public class AttachmentUI extends javax.swing.JFrame {
     private javax.swing.JButton AddVideo;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
+
+    private String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        return fileName.substring(fileName.lastIndexOf(".")+1);
+        else return "";
+    }
 }

@@ -20,6 +20,7 @@ import Models.Category;
 import Configs.DBConnection;
 import Configs.DBConnection;
 import Configs.HTTPRequest;
+import Models.Attachment;
 import Models.Location;
 import Views.MainMenuUI;
 import Views.MainMenuUI;
@@ -27,7 +28,7 @@ import Models.Note;
 import Models.Note;
 import Views.NoteFormEditorUI;
 import Views.NoteFormEditorUI;
-import com.sun.xml.internal.bind.v2.TODO;
+//import com.sun.xml.internal.bind.v2.TODO;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.sql.Statement;
@@ -86,31 +87,38 @@ public class NoteEditor {
     }
 //   saves new note
     public void saveNote(Note note) throws Exception {
-        String sql = "INSERT INTO post (title, content, created_date, location, tag)" +
+        String sql = "INSERT INTO post (title, content, created_date, location, tag, attachment_path, attachment_type)" +
         "VALUES (?, ?, ?, ?, ?)";    
+        java.sql.Date sqlDate = new java.sql.Date(note.getCreatedDate().getTime());
 
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setString(1, note.getTitle());
         preparedStatement.setString(2, note.getContent());
-        java.sql.Date sqlDate = new java.sql.Date(note.getCreatedDate().getTime());
         preparedStatement.setDate(3, sqlDate);
         preparedStatement.setString(4, note.getLocation());
         preparedStatement.setString(5, note.getTag());
+        preparedStatement.setString(6, note.getAttachment().getLocation());
+        preparedStatement.setString(7, note.getAttachment().getFileType());
 
         preparedStatement.executeUpdate();        
     
     }
 //    update current note
     public void updateNote(Note note) throws Exception {
-        String sql = "UPDATE post SET title = ?, content = ?, location = ?, tag = ? WHERE id_note = ?";
+        String sql = "UPDATE post SET title = ?, content = ?, location = ?, tag = ?, attachment_path = ?, attachment_type = ? WHERE id_note = ?";
 
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setString(1, note.getTitle());
         preparedStatement.setString(2, note.getContent());
         preparedStatement.setString(3, note.getLocation());
-        preparedStatement.setString(4, note.getTag());
-        preparedStatement.setInt(5, note.getNoteId());   
-
+        preparedStatement.setString(4, note.getTag());        
+        preparedStatement.setString(5, note.getAttachment().getLocation());
+        preparedStatement.setString(6, note.getAttachment().getFileType());
+        
+        preparedStatement.setInt(7, note.getNoteId());   
+        
+        System.out.println("updated " + note.getAttachment().getLocation());
+        
         preparedStatement.executeUpdate();     
         
     }
@@ -127,7 +135,8 @@ public class NoteEditor {
         nfe.setMode(mode);
     }
     
-    public void instantiateNote(String title, String content, String mode, int noteId, String location, Category c, String tag) {
+    public void instantiateNote(String title, String content, String mode, int noteId, String location, Category c, String tag,
+        String fileName, String fileLocation, String fileType) {
         Note note = new Note();
         note.setTitle(title);
         note.setContent(content);
@@ -137,7 +146,8 @@ public class NoteEditor {
         note.setLocation(location);
         note.setTag(tag);
         
-        
+        Attachment a = new Attachment(fileName, fileLocation, fileType);
+        note.setAttachment(a);
         try {
             //update note
             if ("update".equals(mode)) {
@@ -155,7 +165,26 @@ public class NoteEditor {
     
     public void openNoteEditorUI(Note note, String mode) {
         NoteFormEditorUI nfe = new NoteFormEditorUI();
-        nfe.setInput(note.getTitle(), note.getContent(), note.getIsArchived(), note.getTag(), note.getLocation());
+        Category cat = null;
+        
+        CategoryController cc = new CategoryController();
+        System.out.println("fiiiiid");
+//        find category attach to note
+        try {
+            cat = cc.findCategory(note.getCategoryId()); // returns category
+        } catch (Exception ex) {
+            Logger.getLogger(NoteEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (cat == null) {
+            cat = new Category();
+            cat.setName("None");
+            cat.setRed(-1); cat.setGreen(-1); cat.setBlue(-1);
+        }
+        
+        
+        nfe.setInput(note.getTitle(), note.getContent(), note.getIsArchived(), note.getTag(), note.getLocation(), cat.getName(), cat.getRed(), cat.getGreen(), cat.getBlue());
+        System.out.println("ooooo");
         nfe.setVisible(true);
         nfe.setMode(mode);
         nfe.setNoteId(note.getNoteId());

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Views;
+import Controllers.AttachmentController;
 import java.awt.Dialog;
 import java.io.File;
 import java.util.logging.Level;
@@ -13,9 +14,11 @@ import Controllers.NoteController;
 import Controllers.NoteEditor;
 import static javax.swing.JOptionPane.showMessageDialog;
 import Controllers.CategoryController;
+import Models.Attachment;
 import Models.Category;
 import Models.Location;
 import Models.Note;
+import java.awt.Color;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.Iterator;
@@ -36,14 +39,33 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     private String location = "";
     private Category c = null;
     
+    //private Attachment attachment = null;
+    private NoteEditor ne = null;
+    private CategoryController cc = null;
+    
+    //to know wheter to update or create new note
+    private String mode = null;
+    
+    private int inTrash = -1;
+    private int isArchived = -1;
+    
+    private String filePath = "", fileName = "", fileType = "";
+
+    
     public void setCat(Category c) {
         this.c = c;
+    }
+    
+    public void setAttachment(String path, String name, String type) {
+        filePath = path; fileName = name; fileType = type;
+        System.out.println(filePath + fileName + fileType);
     }
 
     /**
      * Creates new form NoteFormEditorUI
      */
     public NoteFormEditorUI() {
+        ne = new NoteEditor();        
         initComponents();        
         this.trashBtn.setEnabled(false);     
         this.archiveBtn.setEnabled(false);;
@@ -80,12 +102,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
         }
         
     }
-    
-    
-    //to know wheter to update or create new note
-    private String mode = null;
-    private int inTrash = -1;
-    private int isArchived = -1;
+       
 
     public int getIsArchived() {
         return isArchived;
@@ -98,7 +115,6 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
             this.archiveBtn.setEnabled(false);
         }
     }
-    private String filePath, fileName = "";
 
     public int getInTrash() {
         return inTrash;
@@ -155,7 +171,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
         deleteBtn = new javax.swing.JButton();
         locationBtn = new javax.swing.JButton();
         locationField = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        categoryField = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tagInput = new javax.swing.JTextPane();
         titleLabel1 = new javax.swing.JLabel();
@@ -163,9 +179,17 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         restoreBtn = new javax.swing.JButton();
+        categoryColour = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
+        locationDialog.setLocation(new java.awt.Point(300, 400));
         locationDialog.setSize(new java.awt.Dimension(600, 400));
 
+        locationInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                locationInputActionPerformed(evt);
+            }
+        });
         locationInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 locationInputKeyReleased(evt);
@@ -174,7 +198,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
 
         jLabel1.setText("Search Location");
 
-        searchLocationBtn.setText("Go");
+        searchLocationBtn.setText("Search");
         searchLocationBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchLocationBtnActionPerformed(evt);
@@ -196,15 +220,14 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
             locationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(locationDialogLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addGroup(locationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(locationDialogLayout.createSequentialGroup()
+                .addGroup(locationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, locationDialogLayout.createSequentialGroup()
                         .addComponent(confirmBtn)
-                        .addGap(263, 263, 263)
-                        .addComponent(searchLocationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(locationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(locationSelect, 0, 432, Short.MAX_VALUE)
-                        .addComponent(locationInput)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchLocationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(locationSelect, javax.swing.GroupLayout.Alignment.LEADING, 0, 432, Short.MAX_VALUE)
+                    .addComponent(locationInput, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         locationDialogLayout.setVerticalGroup(
@@ -217,14 +240,13 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(locationSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(locationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchLocationBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGroup(locationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(searchLocationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(233, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
 
         contentInput.setColumns(20);
         contentInput.setRows(5);
@@ -317,10 +339,10 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Category");
-        jTextField1.setEnabled(false);
+        categoryField.setEditable(false);
+        categoryField.setBackground(new java.awt.Color(255, 255, 255));
+        categoryField.setText("Category");
+        categoryField.setEnabled(false);
 
         jScrollPane3.setViewportView(tagInput);
 
@@ -336,6 +358,26 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
             }
         });
 
+        categoryColour.setBorder(new javax.swing.border.MatteBorder(null));
+
+        javax.swing.GroupLayout categoryColourLayout = new javax.swing.GroupLayout(categoryColour);
+        categoryColour.setLayout(categoryColourLayout);
+        categoryColourLayout.setHorizontalGroup(
+            categoryColourLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 185, Short.MAX_VALUE)
+        );
+        categoryColourLayout.setVerticalGroup(
+            categoryColourLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jButton1.setText("ceck at");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -344,21 +386,20 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(restoreBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(unArchiveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(trashBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
                                             .addComponent(archiveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(attachmentBtn)))
+                                            .addComponent(attachmentBtn))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(unArchiveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jButton1)
+                                                .addComponent(trashBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(11, 11, 11)
@@ -373,22 +414,32 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
                                 .addComponent(jSeparator2))
                             .addComponent(titleLabel1)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator1)
                                 .addComponent(contentLabel, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
                                 .addComponent(titleLabel, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(locationField, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(archiveStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jSeparator1)
+                                                .addComponent(locationField))
+                                            .addGap(118, 118, 118))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(archiveStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(categoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addComponent(categoryColour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))))
+                        .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(restoreBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -417,7 +468,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(archiveStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(categoryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -432,16 +483,20 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
                             .addComponent(trashBtn)
                             .addComponent(deleteBtn)
                             .addComponent(locationBtn)))
-                    .addComponent(jSeparator3))
+                    .addComponent(jSeparator3)
+                    .addComponent(categoryColour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(11, 11, 11)
                 .addComponent(restoreBtn)
-                .addGap(55, 55, 55))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+//        check if content is empty, don't save
         if ("".equals(this.contentInput.getText().trim())) {
             NoteController nc = new NoteController();
             nc.openMainMenu();
@@ -451,38 +506,47 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
             "Inane warning",
             JOptionPane.WARNING_MESSAGE);
             this.dispose();
-        }
-        
-        NoteEditor ne = new NoteEditor();                
-        ne.instantiateNote(titleInput.getText(), contentInput.getText(), this.mode, this.noteId, this.location, this.c, this.tagInput.getText());   //save current typed note       
+
+        } else { //content not empty, save
+         //        NoteEditor ne = new NoteEditor();                
+        ne.instantiateNote(titleInput.getText(), contentInput.getText(), this.mode, this.noteId, this.location, this.c, this.tagInput.getText(),
+                this.fileName, this.filePath, this.fileType);   //save current typed note       
         NoteController nc = new NoteController();
         nc.openMainMenu();      //open mainmenu, show active notes
-        this.dispose();         //destroy this object
+        this.dispose();         //destroy this object   
+        }               
         
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void attachmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachmentBtnActionPerformed
-        final JFileChooser fc = new JFileChooser();        
-        fc.showOpenDialog(this);
-        int ret = 0; String fileName = "", filePath = "";
-        if (ret == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            fileName = file.getName();
-            filePath = file.getAbsolutePath();
-            System.out.println(fileName);
-            System.out.println(filePath);
-            System.out.println("Clicked on attachment!");
-            
-            this.saveAttachment(file);
-        }                       
+//        final JFileChooser fc = new JFileChooser();        
+//        fc.showOpenDialog(this);
+//        int ret = 0; String fileName = "", filePath = "";
+//        if (ret == JFileChooser.APPROVE_OPTION) {
+//            File file = fc.getSelectedFile();
+//            fileName = file.getName();
+//            filePath = file.getAbsolutePath();
+//            System.out.println(fileName);
+//            System.out.println(filePath);
+//            System.out.println("Clicked on attachment!");
+//            
+//            this.saveAttachment(file);
+//        }                       
+    
+        AttachmentController ac = new AttachmentController(this);
+        ac.openAttachmentUI();
+
     }//GEN-LAST:event_attachmentBtnActionPerformed
 //    todo: hold current filename and path, then when click back btn, saev attachment
     public void saveAttachment(File file) {
         this.fileName = file.getName();
         this.filePath = file.getAbsolutePath();
-        NoteEditor ne = new NoteEditor();
+//        file.get
+        System.out.println(this.filePath);
+//        NoteEditor ne = new NoteEditor();
         
     }
+    
     
     
     private void categoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryBtnActionPerformed
@@ -498,7 +562,8 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     private void archiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveBtnActionPerformed
     
         System.out.println(this.noteId);
-        NoteEditor ne = new NoteEditor();       //instantiate noteeditor (controller)
+//        NoteEditor ne = new NoteEditor();       //instantiate noteeditor (controller)
+
         NoteController nc = new NoteController();
         ne.archiveNote(this.noteId);            //call function to archive
         nc.openMainMenu();                      //back to mainmenu                
@@ -506,7 +571,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_archiveBtnActionPerformed
 
     private void unArchiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unArchiveBtnActionPerformed
-        NoteEditor ne = new NoteEditor();
+//        NoteEditor ne = new NoteEditor();
         Note note = new Note();
         note.setTitle(this.titleInput.getText());
         note.setNoteId(this.noteId);
@@ -515,7 +580,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_unArchiveBtnActionPerformed
 
     private void trashBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trashBtnActionPerformed
-        NoteEditor ne = new NoteEditor();        
+//        NoteEditor ne = new NoteEditor();        
         
         try {
             ne.removeNote(noteId);
@@ -529,7 +594,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_trashBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        NoteEditor ne = new NoteEditor();
+//        NoteEditor ne = new NoteEditor();
         try {
             ne.deleteNote(noteId);
         } catch (Exception ex) {
@@ -545,7 +610,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_locationBtnActionPerformed
 
     private void searchLocationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchLocationBtnActionPerformed
-        NoteEditor ne = new NoteEditor();
+//        NoteEditor ne = new NoteEditor();
         LinkedList<Location> locations = null;
         try {
             locations = ne.searchLocation(this.locationInput.getText());
@@ -564,29 +629,28 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
             Location l = it.next();
             comboBox.addItem(l);              
         }
-        
     }//GEN-LAST:event_searchLocationBtnActionPerformed
 
     private void locationInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_locationInputKeyReleased
-        NoteEditor ne = new NoteEditor();
-        LinkedList<Location> locations = null;
-        try {
-            locations = ne.searchLocation(this.locationInput.getText());
-        } catch (IOException ex) {
-            Logger.getLogger(NoteFormEditorUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex) {
-            Logger.getLogger(NoteFormEditorUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        DefaultComboBoxModel model = (DefaultComboBoxModel) comboBox.getModel();
-        model.removeAllElements();
-        
-        Iterator<Location> it = locations.iterator();
-        
-        while (it.hasNext()) {
-            Location l = it.next();
-            comboBox.addItem(l);              
-        }
+//        NoteEditor ne = new NoteEditor();
+//        LinkedList<Location> locations = null;
+//        try {
+//            locations = ne.searchLocation(this.locationInput.getText());
+//        } catch (IOException ex) {
+//            Logger.getLogger(NoteFormEditorUI.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (JSONException ex) {
+//            Logger.getLogger(NoteFormEditorUI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        DefaultComboBoxModel model = (DefaultComboBoxModel) comboBox.getModel();
+//        model.removeAllElements();
+//        
+//        Iterator<Location> it = locations.iterator();
+//        
+//        while (it.hasNext()) {
+//            Location l = it.next();
+//            comboBox.addItem(l);              
+//        }
     }//GEN-LAST:event_locationInputKeyReleased
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
@@ -599,7 +663,7 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_locationFieldActionPerformed
 
     private void restoreBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreBtnActionPerformed
-        NoteEditor ne = new NoteEditor();
+//        NoteEditor ne = new NoteEditor();
         try {
             ne.restoreNote(this.noteId);
         } catch (Exception ex) {
@@ -612,12 +676,25 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_restoreBtnActionPerformed
 
+    private void locationInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locationInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_locationInputActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.out.println(this.filePath);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     
-    public void setInput(String title, String content, int archiveStatus, String tag, String location) {
+    public void setInput(String title, String content, int archiveStatus, String tag, String location, String category, int r, int g, int b) {
         titleInput.setText(title);
         contentInput.setText(content);
         tagInput.setText(tag);
         locationField.setText(location);
+        categoryField.setText(category);
+        
+        if (category != "None") {
+         categoryColour.setBackground(new Color(r, g, b));   
+        }                
                 
         if (archiveStatus == 1) {
             this.archiveStatus.setText("Archived");
@@ -672,10 +749,13 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     private javax.swing.JButton attachmentBtn;
     private javax.swing.JButton backBtn;
     private javax.swing.JButton categoryBtn;
+    private javax.swing.JPanel categoryColour;
+    private javax.swing.JTextField categoryField;
     private javax.swing.JButton confirmBtn;
     private javax.swing.JTextArea contentInput;
     private javax.swing.JLabel contentLabel;
     private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -683,7 +763,6 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton locationBtn;
     private javax.swing.JDialog locationDialog;
     private javax.swing.JTextField locationField;

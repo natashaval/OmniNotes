@@ -43,6 +43,7 @@
                   <Component id="addCatBtn" pref="134" max="32767" attributes="0"/>
                   <Component id="catSelect" max="32767" attributes="0"/>
                   <Component id="saveBtn" max="32767" attributes="0"/>
+                  <Component id="uncategorizeBtn" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
@@ -68,6 +69,8 @@
                       <Component id="catSelect" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="saveBtn" min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="uncategorizeBtn" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="41" max="32767" attributes="0"/>
@@ -129,6 +132,20 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="uncategorizeBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Uncategorize"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="uncategorizeBtnActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

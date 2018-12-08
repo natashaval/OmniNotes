@@ -102,6 +102,35 @@ public class CategoryController {
     public void setCategory(Category c) {        
         this.nfe.setCat(c);
     }
+    
+    public Category findCategory(String catId) throws Exception {
+        
+        Category cat = null;
+        
+        String sql = "select * from category where id = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, catId); 
+        ResultSet rs= ps.executeQuery();
+        
+        while(rs.next()){
+            cat = new Category(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));            
+        }
+        
+        return cat;
+    }
+    
+    public void uncategorize(int noteId) throws Exception {
+                String sql;
+       
+        sql = "UPDATE post set id_category = ? where id_note = ?";
+        
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, null);  
+        preparedStatement.setInt(2, noteId);
+
+        preparedStatement.executeUpdate();  
+        System.out.println("uncategorized");
+    }
 //
 //    void saveCategory(Integer noteId, Category c) {
 //        String sql;

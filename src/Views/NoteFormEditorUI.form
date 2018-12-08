@@ -4,6 +4,9 @@
   <NonVisualComponents>
     <Container class="javax.swing.JDialog" name="locationDialog">
       <Properties>
+        <Property name="location" type="java.awt.Point" editor="org.netbeans.beaninfo.editors.PointEditor">
+          <Point value="[300, 400]"/>
+        </Property>
         <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[600, 400]"/>
         </Property>
@@ -14,17 +17,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="confirmBtn" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="263" max="-2" attributes="0"/>
-                          <Component id="searchLocationBtn" min="-2" pref="81" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="searchLocationBtn" min="-2" pref="93" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel1" min="-2" pref="140" max="-2" attributes="0"/>
-                          <Component id="locationSelect" alignment="0" pref="432" max="32767" attributes="0"/>
-                          <Component id="locationInput" alignment="0" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel1" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                      <Component id="locationSelect" alignment="0" pref="432" max="32767" attributes="0"/>
+                      <Component id="locationInput" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="65" max="32767" attributes="0"/>
               </Group>
@@ -40,11 +41,11 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="locationSelect" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="confirmBtn" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
-                      <Component id="searchLocationBtn" alignment="3" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="searchLocationBtn" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="confirmBtn" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="129" max="32767" attributes="0"/>
+                  <EmptySpace pref="233" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -52,6 +53,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextField" name="locationInput">
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="locationInputActionPerformed"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="locationInputKeyReleased"/>
           </Events>
         </Component>
@@ -62,7 +64,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="searchLocationBtn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Go"/>
+            <Property name="text" type="java.lang.String" value="Search"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchLocationBtnActionPerformed"/>
@@ -94,7 +96,6 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="alwaysOnTop" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -119,23 +120,22 @@
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="restoreBtn" min="-2" pref="116" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="unArchiveBtn" min="-2" pref="116" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="trashBtn" min="-2" pref="116" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
                                           <Component id="archiveBtn" min="-2" pref="116" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="attachmentBtn" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="unArchiveBtn" min="-2" pref="116" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="trashBtn" min="-2" pref="116" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -158,25 +158,40 @@
                           </Group>
                           <Component id="titleLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jSeparator1" max="32767" attributes="0"/>
                               <Component id="contentLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jScrollPane1" alignment="0" pref="487" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" alignment="0" pref="497" max="32767" attributes="0"/>
                               <Component id="titleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
-                              <Component id="locationField" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="archiveStatus" min="-2" pref="108" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="86" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jSeparator1" max="32767" attributes="0"/>
+                                              <Component id="locationField" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="archiveStatus" min="-2" pref="108" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="categoryField" min="-2" pref="86" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="24" max="32767" attributes="0"/>
-                      <Component id="jSeparator3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace pref="52" max="32767" attributes="0"/>
+                      <Component id="categoryColour" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="backBtn" min="-2" pref="156" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace pref="35" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="restoreBtn" min="-2" pref="116" max="-2" attributes="0"/>
+                      <EmptySpace min="34" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -210,7 +225,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="archiveStatus" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="categoryField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
@@ -230,10 +245,13 @@
                       </Group>
                   </Group>
                   <Component id="jSeparator3" max="32767" attributes="0"/>
+                  <Component id="categoryColour" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Component id="restoreBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -381,7 +399,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="locationFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="categoryField">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -425,6 +443,36 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="restoreBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Container class="javax.swing.JPanel" name="categoryColour">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+            <MatteColorBorder/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="185" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ceck at"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -55,11 +55,11 @@ public class TrashUI extends javax.swing.JFrame {
                 String tag = current.getTag();
                 String location = current.getLocation();
                 
-                if (tag == null) {
+                if (tag == null || "".equals(tag)) {
                     tag = "None";
                 }
                 
-                if (location == null) {
+                if (location == null || "".equals(location)) {
                     location = "None";
                 }
                 

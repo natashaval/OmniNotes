@@ -24,6 +24,7 @@ public class Note {
     private int isArchived;
     private int isDeleted;
     private String location;
+    private Attachment attachment = null;
 
     public String getLocation() {
         return location;
@@ -157,5 +158,23 @@ public class Note {
         return this.tag;
     }
     
+//    prevent null value from DB
+    private String categoryId;
+    
+    public void setCategoryId(String id){
+        this.categoryId = id;
+    }
+    
+    public String getCategoryId(){
+        return this.categoryId;
+    }
+    
+    public void setAttachment(Attachment a) {
+        this.attachment = a;
+    }
+    
+    public Attachment getAttachment() {
+        return this.attachment;
+    }
     
 }

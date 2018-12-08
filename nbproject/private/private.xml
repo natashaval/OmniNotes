@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Models/Location.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/MainMenuUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/ReminderUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/CategoryUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/TrashUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Models/Note.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Controllers/NoteController.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Configs/HTTPRequest.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/Controllers/AttachmentController.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/Views/AttachmentUI.java</file>
             <file>file:/home/adis/projects/java/OmniNotes/src/Views/NoteFormEditorUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Controllers/NoteEditor.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/ArchiveUI.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/Models/Attachment.java</file>
         </group>
     </open-files>
 </project-private>

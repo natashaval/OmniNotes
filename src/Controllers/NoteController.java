@@ -157,6 +157,7 @@ public class NoteController {
             note.setIsArchived(res.getInt(4));
             note.setLocation(res.getString(10));
             note.setTag(res.getString(12));
+            note.setCategoryId(res.getString(11));
             myNotes.add(note);                
         }
         return myNotes;

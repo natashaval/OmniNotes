@@ -56,39 +56,40 @@ public class MainMenuUI extends javax.swing.JFrame {
         tcm.removeColumn( tcm.getColumn(1) ); //hide is_active column
         tcm.removeColumn( tcm.getColumn(1) ); //hide tag column
         tcm.removeColumn( tcm.getColumn(1) ); //hide location column
-        
+        tcm.removeColumn( tcm.getColumn(1) ); //hide cat_id column
+
         
         this.toFront();
 
     }
     
     
-       public void getNotes(){
-        NoteController nc = new NoteController();
-        LinkedList<Note> myNotes = new LinkedList<Note>();
-        myNotes = nc.getNotes();        
-
-        Iterator<Note> itr=myNotes.iterator();  
-        if (myNotes.size() > 0)  {            
-            ((DefaultTableModel)myNotesTable.getModel()).setRowCount(0);    //clear table
-
-
-            DefaultTableModel model = (DefaultTableModel) myNotesTable.getModel();
-            //add data to notes table
-            while(itr.hasNext()){                        
-                Note current = itr.next();
-                int id = current.getNoteId();
-                String title = current.getTitle();
-                String content = current.getContent();
-                int isArchive = current.getIsArchived();
-                
-                Object[] row = { id, title, content, isArchive };
-                model.addRow(row);
-            }
-            
-        }        
-        
-    }
+//       public void getNotes(){
+//        NoteController nc = new NoteController();
+//        LinkedList<Note> myNotes = new LinkedList<Note>();
+//        myNotes = nc.getNotes();        
+//
+//        Iterator<Note> itr=myNotes.iterator();  
+//        if (myNotes.size() > 0)  {            
+//            ((DefaultTableModel)myNotesTable.getModel()).setRowCount(0);    //clear table
+//
+//
+//            DefaultTableModel model = (DefaultTableModel) myNotesTable.getModel();
+//            //add data to notes table
+//            while(itr.hasNext()){                        
+//                Note current = itr.next();
+//                int id = current.getNoteId();
+//                String title = current.getTitle();
+//                String content = current.getContent();
+//                int isArchive = current.getIsArchived();
+//                
+//                Object[] row = { id, title, content, isArchive };
+//                model.addRow(row);
+//            }
+//            
+//        }        
+//        
+//    }
         
 
     /**
@@ -132,20 +133,20 @@ public class MainMenuUI extends javax.swing.JFrame {
 
         myNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Title", "content", "is_archive", "tag", "location"
+                "id", "Title", "content", "is_archive", "tag", "location", "category_id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -266,8 +267,14 @@ public class MainMenuUI extends javax.swing.JFrame {
             String content = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 2).toString();            
             String tag = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 4).toString();
             String location = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 5).toString();
-
-            System.out.println(tag);
+            String categoryId = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 6).toString();
+            
+            System.out.println("title is " + title);
+            
+//            if (categoryId == null) {
+//                categoryId 
+//            }
+            
             Note note = new Note();
             note.setTitle(title);
             note.setContent(content);
@@ -275,6 +282,7 @@ public class MainMenuUI extends javax.swing.JFrame {
             note.setIsDeleted(0);
             note.setTag(tag);
             note.setLocation(location);
+            note.setCategoryId(categoryId);
             
             NoteEditor ne = new NoteEditor();
             ne.openNoteEditorUI(note, "update");
@@ -337,16 +345,24 @@ public class MainMenuUI extends javax.swing.JFrame {
                 int isArchive = current.getIsArchived();
                 String tag = current.getTag();
                 String location = current.getLocation();
+                String categoryId = current.getCategoryId();
                 
-                if (tag == null) {
+                if (categoryId == null) {
+                    System.out.println("cat is null he");
+                    categoryId = "None";
+                }
+                
+                if (tag == null || "".equals(tag)) {
                     tag = "None";
                 }
                 
-                if (location == null) {
+                if (location == null || "".equals(location)) {
                     location = "None";
                 }
                 
-                Object[] row = { id, title, content, isArchive, tag, location };
+                System.out.println(categoryId);
+                
+                Object[] row = { id, title, content, isArchive, tag, location, categoryId };
                 model.addRow(row);
             }
             
@@ -396,11 +412,11 @@ public class MainMenuUI extends javax.swing.JFrame {
                     
                     System.out.println("content " + content);
 
-                    if (tag == null) {
+                    if (tag == null || "".equals(tag)) {
                         tag = "None";
                     }
 
-                    if (location == null) {
+                    if (location == null || "".equals(location)) {
                         location = "None";
                     }
 

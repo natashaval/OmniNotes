@@ -35,6 +35,7 @@ public class HTTPRequest {
     public HTTPRequest(String url) throws Exception{
         this.setURL(url);
         con = (HttpURLConnection) this.url.openConnection();
+        con.setConnectTimeout(5000);
     }
     
     public void setURL(String url) throws Exception{
