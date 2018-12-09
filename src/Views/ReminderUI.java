@@ -5,17 +5,34 @@
  */
 package Views;
 
+import Controllers.ReminderController;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
+
 /**
  *
  * @author Hwie
  */
 public class ReminderUI extends javax.swing.JFrame {
+    
+
+    private ReminderController rc = null;
 
     /**
      * Creates new form ReminderUI
      */
-    public ReminderUI() {
-        initComponents();
+    public ReminderUI() {        
+        initComponents();        
+    }
+
+    public ReminderUI(ReminderController aThis) {
+        initComponents();        
+        rc = new ReminderController();
+        rc = aThis;
+        this.datePickerDialog.setVisible(true);
     }
 
     /**
@@ -27,48 +44,247 @@ public class ReminderUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        datePickerDialog = new javax.swing.JDialog();
+        dateChooser = new datechooser.beans.DateChooserCombo();
+        jLabel1 = new javax.swing.JLabel();
+        dpBtnDone = new javax.swing.JButton();
+        timePickerDialog = new javax.swing.JDialog();
+        timePicker = new com.github.lgooddatepicker.components.TimePicker();
+        jLabel2 = new javax.swing.JLabel();
+        tpDoneBtn = new javax.swing.JButton();
+        repeatMethodDialog = new javax.swing.JDialog();
+        repeatChooser = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        rmDoneBtn = new javax.swing.JButton();
         Reminder = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        dateTimePicker1 = new com.github.lgooddatepicker.components.DateTimePicker();
+        jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        datePickerDialog.setModal(true);
+        datePickerDialog.setSize(new java.awt.Dimension(478, 120));
 
-        Reminder.setText("Reminder");
-        Reminder.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        dateChooser.setCurrentView(new datechooser.view.appearance.AppearancesList("Contrast",
+            new datechooser.view.appearance.ViewAppearance("custom",
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(51, 51, 51),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(51, 51, 51),
+                    new java.awt.Color(0, 0, 255),
+                    true,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(0, 0, 255),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(128, 128, 128),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(51, 51, 51),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 11),
+                    new java.awt.Color(51, 51, 51),
+                    new java.awt.Color(255, 0, 0),
+                    false,
+                    false,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                (datechooser.view.BackRenderer)null,
+                false,
+                true)));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+    jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+    jLabel1.setText("Select Date");
 
-        dateTimePicker1.setBorder(new javax.swing.border.MatteBorder(null));
+    dpBtnDone.setText("Done");
+    dpBtnDone.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            dpBtnDoneActionPerformed(evt);
+        }
+    });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateTimePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Reminder, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(102, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+    javax.swing.GroupLayout datePickerDialogLayout = new javax.swing.GroupLayout(datePickerDialog.getContentPane());
+    datePickerDialog.getContentPane().setLayout(datePickerDialogLayout);
+    datePickerDialogLayout.setHorizontalGroup(
+        datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(datePickerDialogLayout.createSequentialGroup()
+            .addGap(52, 52, 52)
+            .addGroup(datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(datePickerDialogLayout.createSequentialGroup()
+                    .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(dpBtnDone))
+                .addComponent(jLabel1))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    datePickerDialogLayout.setVerticalGroup(
+        datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datePickerDialogLayout.createSequentialGroup()
+            .addContainerGap(18, Short.MAX_VALUE)
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(datePickerDialogLayout.createSequentialGroup()
+                    .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(34, 34, 34))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datePickerDialogLayout.createSequentialGroup()
+                    .addComponent(dpBtnDone)
+                    .addGap(45, 45, 45))))
+    );
+
+    timePickerDialog.setSize(new java.awt.Dimension(478, 120));
+
+    jLabel2.setText("Select TIme");
+
+    tpDoneBtn.setText("Done");
+    tpDoneBtn.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            tpDoneBtnActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout timePickerDialogLayout = new javax.swing.GroupLayout(timePickerDialog.getContentPane());
+    timePickerDialog.getContentPane().setLayout(timePickerDialogLayout);
+    timePickerDialogLayout.setHorizontalGroup(
+        timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(timePickerDialogLayout.createSequentialGroup()
+            .addGap(51, 51, 51)
+            .addGroup(timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(timePickerDialogLayout.createSequentialGroup()
+                    .addComponent(timePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(32, 32, 32)
+                    .addComponent(tpDoneBtn))
+                .addComponent(jLabel2))
+            .addContainerGap(125, Short.MAX_VALUE))
+    );
+    timePickerDialogLayout.setVerticalGroup(
+        timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timePickerDialogLayout.createSequentialGroup()
+            .addContainerGap(20, Short.MAX_VALUE)
+            .addComponent(jLabel2)
+            .addGap(18, 18, 18)
+            .addGroup(timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(timePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tpDoneBtn))
+            .addGap(28, 28, 28))
+    );
+
+    repeatMethodDialog.setSize(new java.awt.Dimension(478, 120));
+
+    repeatChooser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yes", "No" }));
+
+    jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+    jLabel3.setText("Repeat method");
+
+    rmDoneBtn.setText("Done");
+    rmDoneBtn.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            rmDoneBtnActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout repeatMethodDialogLayout = new javax.swing.GroupLayout(repeatMethodDialog.getContentPane());
+    repeatMethodDialog.getContentPane().setLayout(repeatMethodDialogLayout);
+    repeatMethodDialogLayout.setHorizontalGroup(
+        repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(repeatMethodDialogLayout.createSequentialGroup()
+            .addGap(34, 34, 34)
+            .addGroup(repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel3)
+                .addGroup(repeatMethodDialogLayout.createSequentialGroup()
+                    .addComponent(repeatChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(31, 31, 31)
+                    .addComponent(rmDoneBtn)))
+            .addContainerGap(154, Short.MAX_VALUE))
+    );
+    repeatMethodDialogLayout.setVerticalGroup(
+        repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(repeatMethodDialogLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jLabel3)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(rmDoneBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(repeatChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(29, Short.MAX_VALUE))
+    );
+
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+    Reminder.setText("Reminder");
+    Reminder.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+
+    jButton1.setText("Done");
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton1ActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(63, 63, 63)
+            .addComponent(Reminder, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton1)
+            .addContainerGap(271, Short.MAX_VALUE))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(21, 21, 21)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(Reminder, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(dateTimePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(150, Short.MAX_VALUE))
-        );
+                .addComponent(jButton1))
+            .addContainerGap(176, Short.MAX_VALUE))
+    );
 
-        pack();
+    pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        datePickerDialog.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void tpDoneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tpDoneBtnActionPerformed
+        String time = timePicker.getTime().toString();
+        this.rc.setTime(time);
+        
+        timePickerDialog.dispose();
+        repeatMethodDialog.setVisible(true);
+    }//GEN-LAST:event_tpDoneBtnActionPerformed
+
+    private void dpBtnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpBtnDoneActionPerformed
+        String date = dateChooser.getSelectedDate().getTime().toString();        
+        System.out.println(date);
+        this.rc.addDate(date);
+        
+        datePickerDialog.dispose();        
+        timePickerDialog.setVisible(true);        
+    }//GEN-LAST:event_dpBtnDoneActionPerformed
+
+    private void rmDoneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rmDoneBtnActionPerformed
+        if (repeatChooser.getSelectedItem().toString() == "Yes") {
+         this.rc.addRepeat(1);   
+        } else {
+            this.rc.addRepeat(0);
+        }
+        repeatMethodDialog.dispose();
+    }//GEN-LAST:event_rmDoneBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -100,15 +316,25 @@ public class ReminderUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReminderUI().setVisible(true);
+                new ReminderUI().setVisible(false);                
             }
-        });
+        });        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Reminder;
-    private com.github.lgooddatepicker.components.DateTimePicker dateTimePicker1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private datechooser.beans.DateChooserCombo dateChooser;
+    private javax.swing.JDialog datePickerDialog;
+    private javax.swing.JButton dpBtnDone;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JComboBox<String> repeatChooser;
+    private javax.swing.JDialog repeatMethodDialog;
+    private javax.swing.JButton rmDoneBtn;
+    private com.github.lgooddatepicker.components.TimePicker timePicker;
+    private javax.swing.JDialog timePickerDialog;
+    private javax.swing.JButton tpDoneBtn;
     // End of variables declaration//GEN-END:variables
 }

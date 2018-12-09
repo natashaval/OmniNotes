@@ -16,6 +16,7 @@ import Views.ArchiveUI;
 import Views.ArchiveUI;
 import Configs.DBConnection;
 import Configs.DBConnection;
+import Models.Attachment;
 import Models.Category;
 import Views.MainMenuUI;
 import Views.MainMenuUI;
@@ -27,8 +28,9 @@ import java.sql.PreparedStatement;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.text.StringEscapeUtils;
+import static org.apache.commons.text.StringEscapeUtils.escapeJava;
 
-import javafx.concurrent.Task;
 
 /**
  *
@@ -61,8 +63,9 @@ public class NoteController {
                 note.setContent(res.getString(3));   
                 note.setIsArchived(res.getInt(4));
                 note.setLocation(res.getString(10));
-//                System.out.println(res.getString(10));
+                note.setCategoryId(res.getString(11));      
                 note.setTag(res.getString(12));
+                note.setAttachment(new Attachment(StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(14))));
                 myNotes.add(note);  
             }
             
@@ -84,8 +87,10 @@ public class NoteController {
                 note.setTitle(res.getString(2));
                 note.setContent(res.getString(3));   
                 note.setIsArchived(res.getInt(4));
-                note.setLocation(res.getString(10));
+                note.setLocation(res.getString(10));                         
+                note.setCategoryId(res.getString(11));      
                 note.setTag(res.getString(12));
+                note.setAttachment(new Attachment(StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(14))));
                 myNotes.add(note);  
             }
             
@@ -157,7 +162,8 @@ public class NoteController {
             note.setIsArchived(res.getInt(4));
             note.setLocation(res.getString(10));
             note.setTag(res.getString(12));
-            note.setCategoryId(res.getString(11));
+            note.setCategoryId(res.getString(11));            
+            note.setAttachment(new Attachment(StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(14))));
             myNotes.add(note);                
         }
         return myNotes;
@@ -171,15 +177,16 @@ public class NoteController {
         
         LinkedList<Note> notes = new LinkedList();
         
-        while (res.next()) {
-            System.out.println("ya");
+        while (res.next()) {            
             Note note = new Note();
             note.setNoteId(res.getInt(1));
             note.setTitle(res.getString(2));
             note.setContent(res.getString(3));   
             note.setIsArchived(res.getInt(4));
             note.setLocation(res.getString(10));
+            note.setCategoryId(res.getString(11));
             note.setTag(res.getString(12));
+            note.setAttachment(new Attachment(res.getString(13), res.getString(13), res.getString(14)));
             notes.add(note);
         }
                 

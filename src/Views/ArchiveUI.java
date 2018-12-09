@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import Controllers.NoteEditor;
+import Models.Attachment;
 
 /**
  *
@@ -31,6 +32,11 @@ public class ArchiveUI extends javax.swing.JFrame {
         tcm.removeColumn( tcm.getColumn(1) ); //hide is_active column
         tcm.removeColumn( tcm.getColumn(1) ); //hide tag column
         tcm.removeColumn( tcm.getColumn(1) ); //hide location column
+        tcm.removeColumn( tcm.getColumn(1) ); //hide cat column
+        tcm.removeColumn( tcm.getColumn(1) ); //hide att path column
+        tcm.removeColumn( tcm.getColumn(1) ); //hide att type column
+
+                
         this.getNotes();
     }
     
@@ -53,6 +59,14 @@ public class ArchiveUI extends javax.swing.JFrame {
                 int isArchive = current.getIsArchived();
                 String tag = current.getTag();
                 String location = current.getLocation();
+                String categoryId = current.getCategoryId();
+                String filePath = current.getAttachment().getLocation();
+                String fileType = current.getAttachment().getFileType();
+                
+                if (categoryId == null) {
+                    System.out.println("cat is null he");
+                    categoryId = "None";
+                }
                 
                 if (tag == null || "".equals(tag)) {
                     tag = "None";
@@ -62,7 +76,12 @@ public class ArchiveUI extends javax.swing.JFrame {
                     location = "None";
                 }
                 
-                Object[] row = { id, title, content, isArchive, tag, location };
+                if (fileType == null || "".equals(fileType)) {
+                    fileType = "None";
+                    filePath = "None";
+                }
+                
+                Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType };
                 model.addRow(row);
                 
             }
@@ -87,33 +106,33 @@ public class ArchiveUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Archieve.setText("Archive");
         Archieve.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        Archieve.setText("Archive");
 
         archiveNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Title", "content", "is_archive", "tag", "location"
+                "id", "Title", "content", "is_archive", "tag", "location", "cat_id", "attachment_path", "attachment_type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true, true, true, true
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -192,7 +211,9 @@ public class ArchiveUI extends javax.swing.JFrame {
             String content = archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 2).toString();
             String tag = archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 4).toString();
             String location = archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 5).toString();
-
+            String categoryId = archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 6).toString();
+            String filePath = archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 7).toString();
+            String fileType = archiveNotesTable.getModel().getValueAt(archiveNotesTable.getSelectedRow(), 8).toString();
             
             Note note = new Note();
             note.setTitle(title);
@@ -203,6 +224,8 @@ public class ArchiveUI extends javax.swing.JFrame {
             note.setIsArchived(1);
             note.setTag(tag);
             note.setLocation(location);
+            note.setCategoryId(categoryId);
+            note.setAttachment(new Attachment(filePath, filePath, fileType));
             
             
             NoteEditor ne = new NoteEditor();

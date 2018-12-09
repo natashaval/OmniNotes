@@ -181,10 +181,16 @@ public class NoteEditor {
             cat.setName("None");
             cat.setRed(-1); cat.setGreen(-1); cat.setBlue(-1);
         }
+        String filePath = note.getAttachment().getLocation();
         
+        if (filePath == null || "".equals(filePath)) {
+            filePath = "None";
+        }               
         
-        nfe.setInput(note.getTitle(), note.getContent(), note.getIsArchived(), note.getTag(), note.getLocation(), cat.getName(), cat.getRed(), cat.getGreen(), cat.getBlue());
-        System.out.println("ooooo");
+        System.out.println("filepath is " + filePath);
+        System.out.println("category is " + cat.getName());
+        
+        nfe.setInput(note.getTitle(), note.getContent(), note.getIsArchived(), note.getTag(), note.getLocation(), cat.getName(), cat.getRed(), cat.getGreen(), cat.getBlue(), filePath, note.getAttachment().getFileType());        
         nfe.setVisible(true);
         nfe.setMode(mode);
         nfe.setNoteId(note.getNoteId());

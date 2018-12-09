@@ -13,14 +13,16 @@ import java.util.Date;
  */
 public class Reminder {
     private Integer reminderId;
-    private Date reminderDate;
+    private String reminderDate;
     private Integer repeat;
 
-    public Reminder(Integer reminderId, Date reminderDate, Integer repeat) {
+    public Reminder(Integer reminderId, String reminderDate, Integer repeat) {
         this.reminderId = reminderId;
         this.reminderDate = reminderDate;
         this.repeat = repeat;
     }
+
+    public Reminder() { }
 
     public Integer getReminderId() {
         return reminderId;
@@ -30,11 +32,11 @@ public class Reminder {
         this.reminderId = reminderId;
     }
 
-    public Date getReminderDate() {
+    public String getReminderDate() {
         return reminderDate;
     }
 
-    public void setReminderDate(Date reminderDate) {
+    public void setReminderDate(String reminderDate) {
         this.reminderDate = reminderDate;
     }
 

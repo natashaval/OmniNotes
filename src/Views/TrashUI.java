@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import Controllers.NoteEditor;
+import Models.Attachment;
 
 /**
  *
@@ -31,6 +32,9 @@ public class TrashUI extends javax.swing.JFrame {
         tcm.removeColumn( tcm.getColumn(1) ); //hide is_active column
         tcm.removeColumn( tcm.getColumn(1) ); //hide tag column
         tcm.removeColumn( tcm.getColumn(1) ); //hide location column
+        tcm.removeColumn( tcm.getColumn(1) ); //hide cat_id column
+        tcm.removeColumn( tcm.getColumn(1) ); //hide attachment path
+        tcm.removeColumn( tcm.getColumn(1) ); //hide attachment type
         this.getNotes();
     }
     
@@ -54,6 +58,15 @@ public class TrashUI extends javax.swing.JFrame {
                 int isArchive = current.getIsArchived();
                 String tag = current.getTag();
                 String location = current.getLocation();
+                String categoryId = current.getCategoryId();
+                String filePath = current.getAttachment().getLocation();
+                String fileType = current.getAttachment().getFileType();
+                
+                if (categoryId == null) {
+                    System.out.println("cat is null he");
+                    categoryId = "None";
+                }
+                
                 
                 if (tag == null || "".equals(tag)) {
                     tag = "None";
@@ -63,7 +76,13 @@ public class TrashUI extends javax.swing.JFrame {
                     location = "None";
                 }
                 
-                Object[] row = { id, title, content, isArchive, tag, location };
+                if (fileType == null || "".equals(fileType)) {
+                    fileType = "None";
+                    filePath = "None";
+                }
+                
+                
+                Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType };
                 model.addRow(row);
             }
         }
@@ -100,33 +119,33 @@ public class TrashUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Trash.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         Trash.setText("Trash");
+        Trash.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
         trashNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "note_id", "TItle", "content", "is_archive", "tag", "location"
+                "note_id", "TItle", "content", "is_archive", "tag", "location", "attachment_path", "attachment_type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -192,7 +211,10 @@ public class TrashUI extends javax.swing.JFrame {
             String content = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 2).toString();
             String tag = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 4).toString();
             String location = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 5).toString();
-
+            String categoryId = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 6).toString();
+            String filePath = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 7).toString();
+            String fileType = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 8).toString();
+            
             Note note = new Note();
             note.setTitle(title);
             note.setContent(content);
@@ -200,6 +222,8 @@ public class TrashUI extends javax.swing.JFrame {
             note.setInTrash(1);
             note.setTag(tag);
             note.setLocation(location);
+            note.setCategoryId(categoryId);
+            note.setAttachment(new Attachment(filePath, filePath, fileType));
             
             NoteEditor ne = new NoteEditor();
             ne.openNoteEditorUI(note, "update");

@@ -25,6 +25,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import Controllers.CategoryController;
+import Models.Attachment;
 import Models.Category;
 import java.awt.Dimension;
 import java.sql.SQLException;
@@ -57,7 +58,8 @@ public class MainMenuUI extends javax.swing.JFrame {
         tcm.removeColumn( tcm.getColumn(1) ); //hide tag column
         tcm.removeColumn( tcm.getColumn(1) ); //hide location column
         tcm.removeColumn( tcm.getColumn(1) ); //hide cat_id column
-
+        tcm.removeColumn( tcm.getColumn(1) ); //hide file path column
+        tcm.removeColumn( tcm.getColumn(1) ); //hide file type column
         
         this.toFront();
 
@@ -133,20 +135,20 @@ public class MainMenuUI extends javax.swing.JFrame {
 
         myNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Title", "content", "is_archive", "tag", "location", "category_id"
+                "id", "Title", "content", "is_archive", "tag", "location", "category_id", "file_path", "file_type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -268,12 +270,8 @@ public class MainMenuUI extends javax.swing.JFrame {
             String tag = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 4).toString();
             String location = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 5).toString();
             String categoryId = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 6).toString();
-            
-            System.out.println("title is " + title);
-            
-//            if (categoryId == null) {
-//                categoryId 
-//            }
+            String filePath = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 7).toString();
+            String fileType = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 8).toString();
             
             Note note = new Note();
             note.setTitle(title);
@@ -283,6 +281,7 @@ public class MainMenuUI extends javax.swing.JFrame {
             note.setTag(tag);
             note.setLocation(location);
             note.setCategoryId(categoryId);
+            note.setAttachment(new Attachment(filePath, filePath, fileType));
             
             NoteEditor ne = new NoteEditor();
             ne.openNoteEditorUI(note, "update");
@@ -346,6 +345,11 @@ public class MainMenuUI extends javax.swing.JFrame {
                 String tag = current.getTag();
                 String location = current.getLocation();
                 String categoryId = current.getCategoryId();
+                String filePath = current.getAttachment().getLocation();
+                String fileType = current.getAttachment().getFileType();
+                
+                System.out.println("fp " + filePath);
+                
                 
                 if (categoryId == null) {
                     System.out.println("cat is null he");
@@ -360,9 +364,12 @@ public class MainMenuUI extends javax.swing.JFrame {
                     location = "None";
                 }
                 
-                System.out.println(categoryId);
+                if (fileType == null || "".equals(fileType)) {
+                    fileType = "None";
+                    filePath = "None";
+                }
                 
-                Object[] row = { id, title, content, isArchive, tag, location, categoryId };
+                Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType };
                 model.addRow(row);
             }
             
@@ -409,8 +416,16 @@ public class MainMenuUI extends javax.swing.JFrame {
                     int isArchive = current.getIsArchived();
                     String tag = current.getTag();
                     String location = current.getLocation();
-                    
+                    String categoryId = current.getCategoryId();
+                    String filePath = current.getAttachment().getLocation();
+                    String fileType = current.getAttachment().getFileType();
+
                     System.out.println("content " + content);
+                    
+                    if (categoryId == null) {
+                        System.out.println("cat is null he");
+                        categoryId = "None";
+                    }
 
                     if (tag == null || "".equals(tag)) {
                         tag = "None";
@@ -419,8 +434,13 @@ public class MainMenuUI extends javax.swing.JFrame {
                     if (location == null || "".equals(location)) {
                         location = "None";
                     }
+                    
+                    if (fileType == null || "".equals(fileType)) {
+                        fileType = "None";
+                        filePath = "None";
+                    }
 
-                    Object[] row = { id, title, content, isArchive, tag, location };
+                    Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType };
                     model.addRow(row);
                 }
             

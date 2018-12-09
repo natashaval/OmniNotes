@@ -46,13 +46,87 @@ public class AttachmentUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        audioDialog = new javax.swing.JDialog();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        sketchDialog = new javax.swing.JDialog();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         AddPhoto = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
         AddFile = new javax.swing.JButton();
         AddSketch = new javax.swing.JButton();
         AddVideo = new javax.swing.JButton();
-        AddLocation = new javax.swing.JButton();
         AddAudio = new javax.swing.JButton();
+
+        audioDialog.setSize(new java.awt.Dimension(391, 100));
+
+        jButton1.setText("Record");
+
+        jButton2.setText("Stop");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout audioDialogLayout = new javax.swing.GroupLayout(audioDialog.getContentPane());
+        audioDialog.getContentPane().setLayout(audioDialogLayout);
+        audioDialogLayout.setHorizontalGroup(
+            audioDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(audioDialogLayout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(jButton2)
+                .addContainerGap(118, Short.MAX_VALUE))
+        );
+        audioDialogLayout.setVerticalGroup(
+            audioDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(audioDialogLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(audioDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        sketchDialog.setSize(new java.awt.Dimension(391, 100));
+
+        jButton3.setText("Start drawing");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Back");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout sketchDialogLayout = new javax.swing.GroupLayout(sketchDialog.getContentPane());
+        sketchDialog.getContentPane().setLayout(sketchDialogLayout);
+        sketchDialogLayout.setHorizontalGroup(
+            sketchDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sketchDialogLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addGap(45, 45, 45))
+        );
+        sketchDialogLayout.setVerticalGroup(
+            sketchDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sketchDialogLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(sketchDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,13 +161,6 @@ public class AttachmentUI extends javax.swing.JFrame {
             }
         });
 
-        AddLocation.setText("Add Location");
-        AddLocation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddLocationActionPerformed(evt);
-            }
-        });
-
         AddAudio.setText("Add Audio");
         AddAudio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,9 +184,7 @@ public class AttachmentUI extends javax.swing.JFrame {
                             .addComponent(AddVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AddSketch, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(AddLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AddAudio, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(AddAudio, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(titleLabel)))
@@ -138,8 +203,7 @@ public class AttachmentUI extends javax.swing.JFrame {
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddFile, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddSketch, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AddSketch, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -147,8 +211,10 @@ public class AttachmentUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddPhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPhotoActionPerformed
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Photos", "jpg", "jpeg", "png");
-        this.openAttachmentChooser(filter);
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("Photos", "jpg", "jpeg", "png");
+//        this.openAttachmentChooser(filter);
+
+           ac.openCamera();
     }//GEN-LAST:event_AddPhotoActionPerformed
 
     private void AddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddFileActionPerformed
@@ -157,23 +223,38 @@ public class AttachmentUI extends javax.swing.JFrame {
     }//GEN-LAST:event_AddFileActionPerformed
 
     private void AddVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddVideoActionPerformed
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "mp4", "mpeg", "wav");
-        this.openAttachmentChooser(filter);
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "mp4", "mpeg", "wav");
+//        this.openAttachmentChooser(filter);
+
+        this.ac.openVideoCamera();
     }//GEN-LAST:event_AddVideoActionPerformed
 
     private void AddAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddAudioActionPerformed
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Audios", "mp3", "mp2");
-        this.openAttachmentChooser(filter);
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("Audios", "mp3", "mp2");
+//        this.openAttachmentChooser(filter);
+            
+        this.audioDialog.setVisible(true);
+    
     }//GEN-LAST:event_AddAudioActionPerformed
 
     private void AddSketchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddSketchActionPerformed
-        FileNameExtensionFilter filter = null;
-        this.openAttachmentChooser(filter);
+//        FileNameExtensionFilter filter = null;
+//        this.openAttachmentChooser(filter);
+
+        this.sketchDialog.setVisible(true);
     }//GEN-LAST:event_AddSketchActionPerformed
 
-    private void AddLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddLocationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddLocationActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        sketchDialog.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        audioDialog.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        this.ac.addSketch();
+    }//GEN-LAST:event_jButton3ActionPerformed
     
     private void openAttachmentChooser(FileNameExtensionFilter filter) {
         System.out.println(this.ac.test);
@@ -248,10 +329,15 @@ public class AttachmentUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddAudio;
     private javax.swing.JButton AddFile;
-    private javax.swing.JButton AddLocation;
     private javax.swing.JButton AddPhoto;
     private javax.swing.JButton AddSketch;
     private javax.swing.JButton AddVideo;
+    private javax.swing.JDialog audioDialog;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JDialog sketchDialog;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 

@@ -5,6 +5,9 @@
  */
 package Controllers;
 
+import Models.Reminder;
+import Views.NoteFormEditorUI;
+import Views.ReminderUI;
 import java.util.Date;
 
 /**
@@ -12,17 +15,36 @@ import java.util.Date;
  * @author Natasha
  */
 public class ReminderController {
+
+    private NoteFormEditorUI nfeui = new NoteFormEditorUI();   
+    private Reminder reminder = null;
     
-    private void addDate(Date date) {
-        
+    public ReminderController(NoteFormEditorUI aThis) {
+//        this.nfeui = new NoteFormEditorUI();
+        this.nfeui = aThis;
+        reminder = new Reminder();
+    }
+
+    public ReminderController() { }
+
+    
+    public void addDate(String date) {
+        reminder.setReminderDate(date);        
     }
     
-    private void setTime(Date time) {
-        
+    public void setTime(String time) {
+//        concat date and time
+        reminder.setReminderDate(reminder.getReminderDate() + time);      
+
     }
     
-    private void addRepeat(Integer number) {
-        
+    public void addRepeat(Integer number) {
+        reminder.setRepeat(number);
+        this.nfeui.setReminder(reminder.getReminderDate(), reminder.getRepeat());
+    }
+    
+    public void openReminderUI() {
+        ReminderUI rui = new ReminderUI(this);
     }
     
 }

@@ -7,7 +7,9 @@ package Controllers;
 
 import Models.Attachment;
 import Views.AttachmentUI;
+import Views.CameraUI;
 import Views.NoteFormEditorUI;
+import Views.VideoCameraUI;
 import java.io.File;
 import java.io.FileFilter;
 import javax.imageio.ImageIO;
@@ -50,13 +52,16 @@ public class AttachmentController {
     }
     
     public void addAudio(){
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Audios", "mp3", "mp2");
-        this.openAttachmentChooser(filter);
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("Audios", "mp3", "mp2");
+//        this.openAttachmentChooser(filter);
+        System.out.println("Recording hehehe");
     }
     
     public void addSketch(){
-        FileNameExtensionFilter filter = null;
-        this.openAttachmentChooser(filter);
+//        FileNameExtensionFilter filter = null;
+//        this.openAttachmentChooser(filter);
+
+        System.out.println("Sketching hehehe");
     }
     
     public void addLocation() {
@@ -82,6 +87,16 @@ public class AttachmentController {
             this.setAttachment(a);
             
         }  
+    }
+    
+    public void openVideoCamera() {
+        VideoCameraUI vcui = new VideoCameraUI();
+    }
+    
+    
+    public void selectPhoto(String fileName, String filePath, String fileType) {
+        Attachment a = new Attachment(fileName, filePath, fileType);
+        this.setAttachment(a);
     }
     
     public String test = "huy";
@@ -126,6 +141,11 @@ public class AttachmentController {
         if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
         return fileName.substring(fileName.lastIndexOf(".")+1);
         else return "";
+    }
+    
+    public void openCamera() {
+        CameraUI camera = new CameraUI(this);
+        camera.setVisible(true);
     }
     
 }
