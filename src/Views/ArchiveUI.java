@@ -35,7 +35,8 @@ public class ArchiveUI extends javax.swing.JFrame {
         tcm.removeColumn( tcm.getColumn(1) ); //hide cat column
         tcm.removeColumn( tcm.getColumn(1) ); //hide att path column
         tcm.removeColumn( tcm.getColumn(1) ); //hide att type column
-
+        tcm.removeColumn( tcm.getColumn(1) ); //hide reminder
+        tcm.removeColumn( tcm.getColumn(1) ); //hide repeat
                 
         this.getNotes();
     }
@@ -62,6 +63,8 @@ public class ArchiveUI extends javax.swing.JFrame {
                 String categoryId = current.getCategoryId();
                 String filePath = current.getAttachment().getLocation();
                 String fileType = current.getAttachment().getFileType();
+                String reminder = current.getReminder().getReminderDate();
+                String repeat = current.getReminder().getRepeat();
                 
                 if (categoryId == null) {
                     System.out.println("cat is null he");
@@ -81,7 +84,11 @@ public class ArchiveUI extends javax.swing.JFrame {
                     filePath = "None";
                 }
                 
-                Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType };
+                if (reminder == null || "".equals(reminder)) {
+                    reminder = "None";
+                }
+                
+                Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType, reminder, repeat };
                 model.addRow(row);
                 
             }
@@ -111,28 +118,28 @@ public class ArchiveUI extends javax.swing.JFrame {
 
         archiveNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Title", "content", "is_archive", "tag", "location", "cat_id", "attachment_path", "attachment_type"
+                "id", "Title", "content", "is_archive", "tag", "location", "cat_id", "attachment_path", "attachment_type", "reminder", "repeat"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {

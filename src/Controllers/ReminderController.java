@@ -39,7 +39,7 @@ public class ReminderController {
     }
     
     public void addRepeat(Integer number) {
-        reminder.setRepeat(number);
+        reminder.setRepeat(number.toString());
         this.nfeui.setReminder(reminder.getReminderDate(), reminder.getRepeat());
     }
     

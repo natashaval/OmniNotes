@@ -25,6 +25,15 @@ public class Note {
     private int isDeleted;
     private String location;
     private Attachment attachment = null;
+    private Reminder reminder = null;
+
+    public Reminder getReminder() {
+        return reminder;
+    }
+
+    public void setReminder(Reminder reminder) {
+        this.reminder = reminder;
+    }
 
     public String getLocation() {
         return location;

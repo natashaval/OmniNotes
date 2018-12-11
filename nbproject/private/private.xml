@@ -3,22 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/adis/projects/java/OmniNotes/src/TakePicturesAndPlayExample.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/MainMenuUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/AttachmentUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Models/Note.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Models/Attachment.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Assets/.gitignore</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/WebcamTest.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/TakeSnapshotFromVideoExample.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/App.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/TakePictureExample2.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/WebcamPanelFillAreaExample.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/TrashUI.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Controllers/AttachmentController.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/Views/CategoryUI.java</file>
+            <file>file:/home/adis/projects/java/OmniNotes/src/Controllers/CategoryController.java</file>
             <file>file:/home/adis/projects/java/OmniNotes/src/Views/NoteFormEditorUI.java</file>
             <file>file:/home/adis/projects/java/OmniNotes/src/Controllers/NoteEditor.java</file>
-            <file>file:/home/adis/projects/java/OmniNotes/src/Views/ArchiveUI.java</file>
         </group>
     </open-files>
 </project-private>

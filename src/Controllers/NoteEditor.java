@@ -26,6 +26,7 @@ import Views.MainMenuUI;
 import Views.MainMenuUI;
 import Models.Note;
 import Models.Note;
+import Models.Reminder;
 import Views.NoteFormEditorUI;
 import Views.NoteFormEditorUI;
 //import com.sun.xml.internal.bind.v2.TODO;
@@ -87,8 +88,9 @@ public class NoteEditor {
     }
 //   saves new note
     public void saveNote(Note note) throws Exception {
-        String sql = "INSERT INTO post (title, content, created_date, location, tag, attachment_path, attachment_type)" +
-        "VALUES (?, ?, ?, ?, ?)";    
+        String sql = "INSERT INTO post (title, content, created_date, location, tag, attachment_path, attachment_type, reminder, is_repeat, id_category)" +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";    
+        
         java.sql.Date sqlDate = new java.sql.Date(note.getCreatedDate().getTime());
 
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -99,13 +101,16 @@ public class NoteEditor {
         preparedStatement.setString(5, note.getTag());
         preparedStatement.setString(6, note.getAttachment().getLocation());
         preparedStatement.setString(7, note.getAttachment().getFileType());
+        preparedStatement.setString(8, note.getReminder().getReminderDate());
+        preparedStatement.setString(9,note.getReminder().getRepeat());
+        preparedStatement.setString(10, note.getCategoryId());
 
-        preparedStatement.executeUpdate();        
+        preparedStatement.executeUpdate();       
     
     }
 //    update current note
     public void updateNote(Note note) throws Exception {
-        String sql = "UPDATE post SET title = ?, content = ?, location = ?, tag = ?, attachment_path = ?, attachment_type = ? WHERE id_note = ?";
+        String sql = "UPDATE post SET title = ?, content = ?, location = ?, tag = ?, attachment_path = ?, attachment_type = ?, reminder = ?, is_repeat = ? WHERE id_note = ?";
 
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setString(1, note.getTitle());
@@ -114,12 +119,11 @@ public class NoteEditor {
         preparedStatement.setString(4, note.getTag());        
         preparedStatement.setString(5, note.getAttachment().getLocation());
         preparedStatement.setString(6, note.getAttachment().getFileType());
-        
-        preparedStatement.setInt(7, note.getNoteId());   
-        
-        System.out.println("updated " + note.getAttachment().getLocation());
-        
-        preparedStatement.executeUpdate();     
+        preparedStatement.setString(7, note.getReminder().getReminderDate());
+        preparedStatement.setString(8, note.getReminder().getRepeat());
+        preparedStatement.setInt(9, note.getNoteId());   
+                
+        preparedStatement.executeUpdate();   
         
     }
     
@@ -136,7 +140,7 @@ public class NoteEditor {
     }
     
     public void instantiateNote(String title, String content, String mode, int noteId, String location, Category c, String tag,
-        String fileName, String fileLocation, String fileType) {
+        String fileName, String fileLocation, String fileType, String dateTime, String repeat) {
         Note note = new Note();
         note.setTitle(title);
         note.setContent(content);
@@ -145,9 +149,13 @@ public class NoteEditor {
         note.setNoteId(noteId);        
         note.setLocation(location);
         note.setTag(tag);
+        note.setCategoryId(c.getCategoryId().toString());
         
         Attachment a = new Attachment(fileName, fileLocation, fileType);
         note.setAttachment(a);
+        
+        note.setReminder(new Reminder(dateTime, repeat));
+        
         try {
             //update note
             if ("update".equals(mode)) {
@@ -159,8 +167,6 @@ public class NoteEditor {
         } catch (Exception e) {
             System.out.println(e.getMessage());            
         }
-
-
     }
     
     public void openNoteEditorUI(Note note, String mode) {
@@ -187,15 +193,20 @@ public class NoteEditor {
             filePath = "None";
         }               
         
-        System.out.println("filepath is " + filePath);
-        System.out.println("category is " + cat.getName());
+        System.out.println(note.getReminder().getReminderDate());
         
+//        the function below set flags and labels relevant to note
         nfe.setInput(note.getTitle(), note.getContent(), note.getIsArchived(), note.getTag(), note.getLocation(), cat.getName(), cat.getRed(), cat.getGreen(), cat.getBlue(), filePath, note.getAttachment().getFileType());        
         nfe.setVisible(true);
         nfe.setMode(mode);
         nfe.setNoteId(note.getNoteId());
         nfe.setInTrash(note.getInTrash());
         nfe.setIsArchived(note.getIsArchived());
+        nfe.setCat(cat);
+        nfe.setAttachment(filePath, filePath, note.getAttachment().getFileType());
+        nfe.setLocation(note.getLocation());
+        nfe.setReminder(note.getReminder().getReminderDate(), note.getReminder().getRepeat());
+        System.out.println("heu");
     }
     
     public void unArchiveNote(Note note) {        

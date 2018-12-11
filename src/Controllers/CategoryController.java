@@ -101,6 +101,7 @@ public class CategoryController {
     
     public void setCategory(Category c) {        
         this.nfe.setCat(c);
+        System.out.println("category setted" + c.getCategoryId());
     }
     
     public Category findCategory(String catId) throws Exception {

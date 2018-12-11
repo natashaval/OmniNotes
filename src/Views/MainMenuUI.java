@@ -27,6 +27,7 @@ import javax.swing.tree.DefaultTreeModel;
 import Controllers.CategoryController;
 import Models.Attachment;
 import Models.Category;
+import Models.Reminder;
 import java.awt.Dimension;
 import java.sql.SQLException;
 /**
@@ -60,7 +61,9 @@ public class MainMenuUI extends javax.swing.JFrame {
         tcm.removeColumn( tcm.getColumn(1) ); //hide cat_id column
         tcm.removeColumn( tcm.getColumn(1) ); //hide file path column
         tcm.removeColumn( tcm.getColumn(1) ); //hide file type column
-        
+        tcm.removeColumn( tcm.getColumn(1) ); //hide reminder column
+        tcm.removeColumn( tcm.getColumn(1) ); //hide reminder_repeat column
+
         this.toFront();
 
     }
@@ -135,20 +138,20 @@ public class MainMenuUI extends javax.swing.JFrame {
 
         myNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Title", "content", "is_archive", "tag", "location", "category_id", "file_path", "file_type"
+                "id", "Title", "content", "is_archive", "tag", "location", "category_id", "file_path", "file_type", "reminder", "repeat"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -272,7 +275,9 @@ public class MainMenuUI extends javax.swing.JFrame {
             String categoryId = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 6).toString();
             String filePath = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 7).toString();
             String fileType = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 8).toString();
-            
+            String reminder = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 9).toString();
+            String repeat = myNotesTable.getModel().getValueAt(myNotesTable.getSelectedRow(), 10).toString();
+                
             Note note = new Note();
             note.setTitle(title);
             note.setContent(content);
@@ -282,13 +287,18 @@ public class MainMenuUI extends javax.swing.JFrame {
             note.setLocation(location);
             note.setCategoryId(categoryId);
             note.setAttachment(new Attachment(filePath, filePath, fileType));
+            note.setReminder(new Reminder(reminder, repeat));
+            
+            System.out.println("title " + title + " content " + content + " tag " + tag + " location " + location + " catid " + categoryId + " filepath " + filePath + " filetype " + fileType);
             
             NoteEditor ne = new NoteEditor();
             ne.openNoteEditorUI(note, "update");
             
-        }catch(Exception e){
+        }catch(NumberFormatException e){
+            System.out.println("caught " + e.getMessage());
             System.out.println(e.getMessage());   
-            return;
+            System.out.println(e.getCause());
+//            return;
         }        
         this.dispose();
     }//GEN-LAST:event_myNotesTableMouseClicked
@@ -347,9 +357,8 @@ public class MainMenuUI extends javax.swing.JFrame {
                 String categoryId = current.getCategoryId();
                 String filePath = current.getAttachment().getLocation();
                 String fileType = current.getAttachment().getFileType();
-                
-                System.out.println("fp " + filePath);
-                
+                String reminder = current.getReminder().getReminderDate();                                
+                String repeat = current.getReminder().getRepeat();
                 
                 if (categoryId == null) {
                     System.out.println("cat is null he");
@@ -369,7 +378,11 @@ public class MainMenuUI extends javax.swing.JFrame {
                     filePath = "None";
                 }
                 
-                Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType };
+                if (reminder == null || "".equals(reminder)) {
+                    reminder = "None";
+                }
+                
+                Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType, reminder, repeat };
                 model.addRow(row);
             }
             

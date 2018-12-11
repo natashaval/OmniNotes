@@ -14,9 +14,9 @@ import java.util.Date;
 public class Reminder {
     private Integer reminderId;
     private String reminderDate;
-    private Integer repeat;
+    private String repeat;
 
-    public Reminder(Integer reminderId, String reminderDate, Integer repeat) {
+    public Reminder(String reminderDate, String repeat) {
         this.reminderId = reminderId;
         this.reminderDate = reminderDate;
         this.repeat = repeat;
@@ -40,11 +40,11 @@ public class Reminder {
         this.reminderDate = reminderDate;
     }
 
-    public Integer getRepeat() {
+    public String getRepeat() {
         return repeat;
     }
 
-    public void setRepeat(Integer repeat) {
+    public void setRepeat(String repeat) {
         this.repeat = repeat;
     }
 

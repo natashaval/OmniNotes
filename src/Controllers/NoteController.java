@@ -22,6 +22,7 @@ import Views.MainMenuUI;
 import Views.MainMenuUI;
 import Models.Note;
 import Models.Note;
+import Models.Reminder;
 import Views.TrashUI;
 import Views.TrashUI;
 import java.sql.PreparedStatement;
@@ -66,6 +67,7 @@ public class NoteController {
                 note.setCategoryId(res.getString(11));      
                 note.setTag(res.getString(12));
                 note.setAttachment(new Attachment(StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(14))));
+                note.setReminder(new Reminder(res.getString(15), res.getString(16)));
                 myNotes.add(note);  
             }
             
@@ -91,6 +93,7 @@ public class NoteController {
                 note.setCategoryId(res.getString(11));      
                 note.setTag(res.getString(12));
                 note.setAttachment(new Attachment(StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(14))));
+                note.setReminder(new Reminder(res.getString(15), res.getString(16)));
                 myNotes.add(note);  
             }
             
@@ -164,6 +167,7 @@ public class NoteController {
             note.setTag(res.getString(12));
             note.setCategoryId(res.getString(11));            
             note.setAttachment(new Attachment(StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(13)), StringEscapeUtils.escapeJava(res.getString(14))));
+            note.setReminder(new Reminder(res.getString(15), res.getString(16)));
             myNotes.add(note);                
         }
         return myNotes;
@@ -187,6 +191,7 @@ public class NoteController {
             note.setCategoryId(res.getString(11));
             note.setTag(res.getString(12));
             note.setAttachment(new Attachment(res.getString(13), res.getString(13), res.getString(14)));
+            note.setReminder(new Reminder(res.getString(15), res.getString(16)));
             notes.add(note);
         }
                 
