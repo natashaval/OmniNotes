@@ -149,7 +149,13 @@ public class NoteEditor {
         note.setNoteId(noteId);        
         note.setLocation(location);
         note.setTag(tag);
-        note.setCategoryId(c.getCategoryId().toString());
+
+        if (c == null) {
+            note.setCategoryId(null);
+        } else {
+            note.setCategoryId(c.getCategoryId().toString());    
+        }
+        
         
         Attachment a = new Attachment(fileName, fileLocation, fileType);
         note.setAttachment(a);

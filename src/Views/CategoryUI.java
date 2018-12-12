@@ -66,7 +66,6 @@ public class CategoryUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dateTimePicker1 = new com.github.lgooddatepicker.components.DateTimePicker();
         categoryLabel = new javax.swing.JLabel();
         catColor = new javax.swing.JColorChooser();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -238,7 +237,7 @@ public class CategoryUI extends javax.swing.JFrame {
         } else { //note has been created
             try {
             
-                cc.selectCategory(this.noteId, c.getCategoryId());
+                cc.selectCategory(this.noteId, c.getCategoryId(), c);
             
             } catch (SQLException ex) {
             
@@ -302,7 +301,6 @@ public class CategoryUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> catSelect;
     private javax.swing.JTextPane categoryInput;
     private javax.swing.JLabel categoryLabel;
-    private com.github.lgooddatepicker.components.DateTimePicker dateTimePicker1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton uncategorizeBtn;

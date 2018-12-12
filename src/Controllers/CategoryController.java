@@ -56,6 +56,8 @@ public class CategoryController {
         preparedStatement.setInt(3, cat.getGreen());  
         preparedStatement.setInt(4, cat.getBlue());  
         preparedStatement.executeUpdate();  
+        
+        
         System.out.println("category added");
     }
     
@@ -86,7 +88,7 @@ public class CategoryController {
     }
     
 
-    public void selectCategory(int noteId, int catId) throws SQLException {
+    public void selectCategory(int noteId, int catId, Category c) throws SQLException {
         String sql;
        
         sql = "UPDATE post set id_category = ? where id_note = ?";
@@ -96,6 +98,7 @@ public class CategoryController {
         preparedStatement.setInt(1, catId);  
         
         preparedStatement.executeUpdate();  
+        this.nfe.setCat(c);
         System.out.println("category selected");
     }
     

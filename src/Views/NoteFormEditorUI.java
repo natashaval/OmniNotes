@@ -59,7 +59,8 @@ public class NoteFormEditorUI extends javax.swing.JFrame {
     
     
     public void setCat(Category c) {
-        this.c = c;
+        this.c = c;System.out.println("in set cat");
+        System.out.println("cat name is " + c.getName());
         this.categoryField.setText("Category: " + c.getName());
     }
     
