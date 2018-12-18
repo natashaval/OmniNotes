@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import Controllers.NoteEditor;
 import Models.Attachment;
+import Models.Reminder;
 
 /**
  *
@@ -132,28 +133,28 @@ public class TrashUI extends javax.swing.JFrame {
 
         trashNotesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "note_id", "TItle", "content", "is_archive", "tag", "location", "attachment_path", "attachment_type", "reminder", "repeat"
+                "note_id", "Title", "content", "is_archive", "tag", "location", "category_id", "attachment_path", "attachment_type", "reminder", "repeat"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -222,7 +223,9 @@ public class TrashUI extends javax.swing.JFrame {
             String categoryId = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 6).toString();
             String filePath = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 7).toString();
             String fileType = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 8).toString();
-            
+            String reminder = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 9).toString();
+            String repeat = trashNotesTable.getModel().getValueAt(trashNotesTable.getSelectedRow(), 10).toString();
+                
             Note note = new Note();
             note.setTitle(title);
             note.setContent(content);
@@ -232,7 +235,8 @@ public class TrashUI extends javax.swing.JFrame {
             note.setLocation(location);
             note.setCategoryId(categoryId);
             note.setAttachment(new Attachment(filePath, filePath, fileType));
-            
+            note.setReminder(new Reminder(reminder, repeat));
+
             NoteEditor ne = new NoteEditor();
             ne.openNoteEditorUI(note, "update");
             

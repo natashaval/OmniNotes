@@ -72,150 +72,193 @@ public class ReminderUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout datePickerDialogLayout = new javax.swing.GroupLayout(datePickerDialog.getContentPane());
-        datePickerDialog.getContentPane().setLayout(datePickerDialogLayout);
-        datePickerDialogLayout.setHorizontalGroup(
-            datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(datePickerDialogLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(datePickerDialogLayout.createSequentialGroup()
-                        .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(dpBtnDone)))
-                .addContainerGap(89, Short.MAX_VALUE))
-        );
-        datePickerDialogLayout.setVerticalGroup(
-            datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datePickerDialogLayout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+        dateChooser.setCurrentView(new datechooser.view.appearance.AppearancesList("Contrast",
+            new datechooser.view.appearance.ViewAppearance("custom",
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    new java.awt.Color(51, 51, 51),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    new java.awt.Color(51, 51, 51),
+                    new java.awt.Color(0, 0, 255),
+                    true,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    new java.awt.Color(0, 0, 255),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    new java.awt.Color(128, 128, 128),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    new java.awt.Color(51, 51, 51),
+                    new java.awt.Color(0, 0, 255),
+                    false,
+                    true,
+                    new datechooser.view.appearance.swing.LabelPainter()),
+                new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
+                    new java.awt.Color(51, 51, 51),
+                    new java.awt.Color(255, 0, 0),
+                    false,
+                    false,
+                    new datechooser.view.appearance.swing.ButtonPainter()),
+                (datechooser.view.BackRenderer)null,
+                false,
+                true)));
+
+    javax.swing.GroupLayout datePickerDialogLayout = new javax.swing.GroupLayout(datePickerDialog.getContentPane());
+    datePickerDialog.getContentPane().setLayout(datePickerDialogLayout);
+    datePickerDialogLayout.setHorizontalGroup(
+        datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(datePickerDialogLayout.createSequentialGroup()
+            .addGap(52, 52, 52)
+            .addGroup(datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(datePickerDialogLayout.createSequentialGroup()
                     .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dpBtnDone))
-                .addGap(39, 39, 39))
-        );
+                    .addGap(54, 54, 54)
+                    .addComponent(dpBtnDone)))
+            .addContainerGap(89, Short.MAX_VALUE))
+    );
+    datePickerDialogLayout.setVerticalGroup(
+        datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datePickerDialogLayout.createSequentialGroup()
+            .addContainerGap(18, Short.MAX_VALUE)
+            .addComponent(jLabel1)
+            .addGap(18, 18, 18)
+            .addGroup(datePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dpBtnDone))
+            .addGap(39, 39, 39))
+    );
 
-        timePickerDialog.setSize(new java.awt.Dimension(478, 120));
+    timePickerDialog.setSize(new java.awt.Dimension(478, 120));
 
-        jLabel2.setText("Select TIme");
+    jLabel2.setText("Select TIme");
 
-        tpDoneBtn.setText("Done");
-        tpDoneBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tpDoneBtnActionPerformed(evt);
-            }
-        });
+    tpDoneBtn.setText("Done");
+    tpDoneBtn.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            tpDoneBtnActionPerformed(evt);
+        }
+    });
 
-        javax.swing.GroupLayout timePickerDialogLayout = new javax.swing.GroupLayout(timePickerDialog.getContentPane());
-        timePickerDialog.getContentPane().setLayout(timePickerDialogLayout);
-        timePickerDialogLayout.setHorizontalGroup(
-            timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(timePickerDialogLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(timePickerDialogLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap(242, Short.MAX_VALUE))
-                    .addGroup(timePickerDialogLayout.createSequentialGroup()
-                        .addComponent(timePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tpDoneBtn)
-                        .addGap(55, 55, 55))))
-        );
-        timePickerDialogLayout.setVerticalGroup(
-            timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timePickerDialogLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+    javax.swing.GroupLayout timePickerDialogLayout = new javax.swing.GroupLayout(timePickerDialog.getContentPane());
+    timePickerDialog.getContentPane().setLayout(timePickerDialogLayout);
+    timePickerDialogLayout.setHorizontalGroup(
+        timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(timePickerDialogLayout.createSequentialGroup()
+            .addGap(51, 51, 51)
+            .addGroup(timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(timePickerDialogLayout.createSequentialGroup()
+                    .addComponent(jLabel2)
+                    .addContainerGap(242, Short.MAX_VALUE))
+                .addGroup(timePickerDialogLayout.createSequentialGroup()
+                    .addComponent(timePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tpDoneBtn)
-                    .addComponent(timePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
-        );
+                    .addGap(55, 55, 55))))
+    );
+    timePickerDialogLayout.setVerticalGroup(
+        timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timePickerDialogLayout.createSequentialGroup()
+            .addContainerGap(20, Short.MAX_VALUE)
+            .addComponent(jLabel2)
+            .addGap(18, 18, 18)
+            .addGroup(timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(tpDoneBtn)
+                .addGroup(timePickerDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(timePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(28, 28, 28))
+    );
 
-        repeatMethodDialog.setSize(new java.awt.Dimension(478, 120));
+    repeatMethodDialog.setSize(new java.awt.Dimension(478, 120));
 
-        repeatChooser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yes", "No" }));
-        repeatChooser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                repeatChooserActionPerformed(evt);
-            }
-        });
+    repeatChooser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yes", "No" }));
+    repeatChooser.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            repeatChooserActionPerformed(evt);
+        }
+    });
 
-        jLabel3.setText("Repeat method");
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+    jLabel3.setText("Repeat method");
+    jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
-        rmDoneBtn.setText("Done");
-        rmDoneBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rmDoneBtnActionPerformed(evt);
-            }
-        });
+    rmDoneBtn.setText("Done");
+    rmDoneBtn.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            rmDoneBtnActionPerformed(evt);
+        }
+    });
 
-        javax.swing.GroupLayout repeatMethodDialogLayout = new javax.swing.GroupLayout(repeatMethodDialog.getContentPane());
-        repeatMethodDialog.getContentPane().setLayout(repeatMethodDialogLayout);
-        repeatMethodDialogLayout.setHorizontalGroup(
-            repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(repeatMethodDialogLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(repeatMethodDialogLayout.createSequentialGroup()
-                        .addComponent(repeatChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(rmDoneBtn)))
-                .addContainerGap(154, Short.MAX_VALUE))
-        );
-        repeatMethodDialogLayout.setVerticalGroup(
-            repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(repeatMethodDialogLayout.createSequentialGroup()
-                .addContainerGap()
+    javax.swing.GroupLayout repeatMethodDialogLayout = new javax.swing.GroupLayout(repeatMethodDialog.getContentPane());
+    repeatMethodDialog.getContentPane().setLayout(repeatMethodDialogLayout);
+    repeatMethodDialogLayout.setHorizontalGroup(
+        repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(repeatMethodDialogLayout.createSequentialGroup()
+            .addGap(34, 34, 34)
+            .addGroup(repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(rmDoneBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(repeatChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
+                .addGroup(repeatMethodDialogLayout.createSequentialGroup()
+                    .addComponent(repeatChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(31, 31, 31)
+                    .addComponent(rmDoneBtn)))
+            .addContainerGap(154, Short.MAX_VALUE))
+    );
+    repeatMethodDialogLayout.setVerticalGroup(
+        repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(repeatMethodDialogLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jLabel3)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(repeatMethodDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(rmDoneBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(repeatChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(29, Short.MAX_VALUE))
+    );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Reminder.setText("Reminder");
-        Reminder.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+    Reminder.setText("Reminder");
+    Reminder.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
 
-        jButton1.setText("Done");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+    jButton1.setText("Done");
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton1ActionPerformed(evt);
+        }
+    });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(Reminder, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(94, 94, 94))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Reminder, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(176, Short.MAX_VALUE))
-        );
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(63, 63, 63)
+            .addComponent(Reminder, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+            .addComponent(jButton1)
+            .addGap(94, 94, 94))
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(21, 21, 21)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(Reminder, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1))
+            .addContainerGap(176, Short.MAX_VALUE))
+    );
 
-        pack();
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

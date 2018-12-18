@@ -150,7 +150,7 @@ public class NoteEditor {
         note.setLocation(location);
         note.setTag(tag);
 
-        if (c == null) {
+        if (c == null || "None".equals(c.getName())) {
             note.setCategoryId(null);
         } else {
             note.setCategoryId(c.getCategoryId().toString());    

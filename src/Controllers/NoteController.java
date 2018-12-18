@@ -146,10 +146,10 @@ public class NoteController {
                 sql = "select * from post where is_active = 1 order by title desc";
                 break;
             case 3: sortby = 3;
-                sql = "select * from post where is_active = 1 order by created_date asc";
+                sql = "select * from post where is_active = 1 order by created_date ASC";
                 break;
             case 4: sortby = 4;
-                sql = "select * from post where is_active = 1 order by created_date desc";
+                sql = "select * from post where is_active = 1 order by created_date DESC";
                 break;                
         }
         
@@ -173,7 +173,7 @@ public class NoteController {
         return myNotes;
     }
     
-        public LinkedList<Note> getNotesFromCategory(int catId) throws Exception {
+    public LinkedList<Note> getNotesFromCategory(int catId) throws Exception {
         String sql = "select * from post where id_category = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setInt(1, catId);       
@@ -207,6 +207,32 @@ public class NoteController {
     public void openTrashUI(){
         TrashUI trash = new TrashUI();
         trash.setVisible(true);
+    }
+    
+    public LinkedList<Note> searchNotes(String keyword) throws Exception {
+        String sql = "select * from post where title like ? OR content like ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, "%"+keyword+"%");       
+        preparedStatement.setString(2, "%"+keyword+"%");       
+        ResultSet res = preparedStatement.executeQuery(); 
+
+        LinkedList<Note> notes = new LinkedList();
+
+        while (res.next()) {            
+            Note note = new Note();
+            note.setNoteId(res.getInt(1));
+            note.setTitle(res.getString(2));
+            note.setContent(res.getString(3));   
+            note.setIsArchived(res.getInt(4));
+            note.setLocation(res.getString(10));
+            note.setCategoryId(res.getString(11));
+            note.setTag(res.getString(12));
+            note.setAttachment(new Attachment(res.getString(13), res.getString(13), res.getString(14)));
+            note.setReminder(new Reminder(res.getString(15), res.getString(16)));
+            notes.add(note);
+        }
+
+        return notes;       
     }
     
 }

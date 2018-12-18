@@ -135,19 +135,6 @@ public class CategoryController {
         preparedStatement.executeUpdate();  
         System.out.println("uncategorized");
     }
-//
-//    void saveCategory(Integer noteId, Category c) {
-//        String sql;
-//        sql = "UPDATE category_post set "
-//                + "VALUES (?, ?)";
-//        
-//        PreparedStatement preparedStatement = conn.prepareStatement(sql);
-//        preparedStatement.setInt(1, noteId);
-//        preparedStatement.setInt(2, catId);  
-//        
-//        preparedStatement.executeUpdate();  
-//        System.out.println("category selected");
-//    }
-//        
+   
     
 }

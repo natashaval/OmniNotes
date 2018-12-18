@@ -35,7 +35,9 @@ import java.sql.SQLException;
  * @author Natasha
  */
 public class MainMenuUI extends javax.swing.JFrame {
-
+    
+    private NoteController nc = null;
+    
     /**
      * Creates new form MainMenuUI
      */
@@ -44,6 +46,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 //        this.getNotes();
         this.getCategories();        
         this.setAlwaysOnTop(true);
+        this.nc = new NoteController();
         
         JComboBox comboBox = this.sortMenu;
         comboBox.addItem(new MyComboItem(1, "Ascending: name"));
@@ -68,35 +71,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 
     }
     
-    
-//       public void getNotes(){
-//        NoteController nc = new NoteController();
-//        LinkedList<Note> myNotes = new LinkedList<Note>();
-//        myNotes = nc.getNotes();        
-//
-//        Iterator<Note> itr=myNotes.iterator();  
-//        if (myNotes.size() > 0)  {            
-//            ((DefaultTableModel)myNotesTable.getModel()).setRowCount(0);    //clear table
-//
-//
-//            DefaultTableModel model = (DefaultTableModel) myNotesTable.getModel();
-//            //add data to notes table
-//            while(itr.hasNext()){                        
-//                Note current = itr.next();
-//                int id = current.getNoteId();
-//                String title = current.getTitle();
-//                String content = current.getContent();
-//                int isArchive = current.getIsArchived();
-//                
-//                Object[] row = { id, title, content, isArchive };
-//                model.addRow(row);
-//            }
-//            
-//        }        
-//        
-//    }
-        
-
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,12 +89,11 @@ public class MainMenuUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         categoryTree = new javax.swing.JTree();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        searchBar = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         archiveMenu = new javax.swing.JMenuItem();
         trashMenu = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
 
         jFormattedTextField6.setText("activeNote5");
 
@@ -191,7 +165,12 @@ public class MainMenuUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(categoryTree);
 
-        jScrollPane3.setViewportView(jTextPane1);
+        searchBar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchBarKeyReleased(evt);
+            }
+        });
+        jScrollPane3.setViewportView(searchBar);
 
         jMenu1.setText("Menu");
 
@@ -210,14 +189,6 @@ public class MainMenuUI extends javax.swing.JFrame {
             }
         });
         jMenu1.add(trashMenu);
-
-        jMenuItem1.setText("Category");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
 
@@ -304,31 +275,21 @@ public class MainMenuUI extends javax.swing.JFrame {
     }//GEN-LAST:event_myNotesTableMouseClicked
 
     private void archiveMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveMenuActionPerformed
-        NoteController nc = new NoteController();
         nc.openArchiveUI();           
         this.dispose();
 
     }//GEN-LAST:event_archiveMenuActionPerformed
 
     private void trashMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trashMenuActionPerformed
-        NoteController nc = new NoteController();
         nc.openTrashUI();
         this.dispose();
     }//GEN-LAST:event_trashMenuActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        CategoryController cc = new CategoryController();
-        cc.openCategoryUI();
-        this.dispose();
-                
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void sortMenuPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_sortMenuPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_sortMenuPropertyChange
 
     private void sortMenuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sortMenuItemStateChanged
-        NoteController nc = new NoteController();
         LinkedList<Note> myNotes = null;
         MyComboItem item;
         
@@ -399,10 +360,7 @@ public class MainMenuUI extends javax.swing.JFrame {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) categoryTree.getLastSelectedPathComponent();
         Category c = (Category) node.getUserObject();
         int catId = c.getCategoryId();
-        
-        
-        NoteController nc = new NoteController();
-        
+                       
         LinkedList<Note> myNotes = new LinkedList();
         
         try {
@@ -432,7 +390,9 @@ public class MainMenuUI extends javax.swing.JFrame {
                     String categoryId = current.getCategoryId();
                     String filePath = current.getAttachment().getLocation();
                     String fileType = current.getAttachment().getFileType();
-
+                    String reminder = current.getReminder().getReminderDate();                                
+                    String repeat = current.getReminder().getRepeat();
+                
                     System.out.println("content " + content);
                     
                     if (categoryId == null) {
@@ -452,8 +412,12 @@ public class MainMenuUI extends javax.swing.JFrame {
                         fileType = "None";
                         filePath = "None";
                     }
+                    
+                    if (reminder == null || "".equals(reminder)) {
+                            reminder = "None";
+                    }
 
-                    Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType };
+                    Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType, reminder, repeat };
                     model.addRow(row);
                 }
             
@@ -466,6 +430,78 @@ public class MainMenuUI extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_categoryTreeValueChanged
+
+    private void searchBarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBarKeyReleased
+        String noteKeyword = this.searchBar.getText();
+        LinkedList<Note> myNotes = new LinkedList();
+        
+        
+         try {
+            myNotes = nc.searchNotes(noteKeyword);
+            
+            ((DefaultTableModel)myNotesTable.getModel()).setRowCount(0);    //clear table
+
+            
+            System.out.println(myNotes.size());
+            
+             if (myNotes.size() > 0)  {            
+
+                TableColumnModel tcm = myNotesTable.getColumnModel();
+
+                DefaultTableModel model = (DefaultTableModel) myNotesTable.getModel();
+                Iterator<Note> itr = myNotes.iterator();
+
+                //add data to notes table
+                while(itr.hasNext()){                        
+                    Note current = itr.next();
+                    int id = current.getNoteId();
+                    String title = current.getTitle();
+                    String content = current.getContent();
+                    int isArchive = current.getIsArchived();
+                    String tag = current.getTag();
+                    String location = current.getLocation();
+                    String categoryId = current.getCategoryId();
+                    String filePath = current.getAttachment().getLocation();
+                    String fileType = current.getAttachment().getFileType();
+                    String reminder = current.getReminder().getReminderDate();                                
+                    String repeat = current.getReminder().getRepeat();
+                
+                    System.out.println("content " + content);
+                    
+                    if (categoryId == null) {
+                        System.out.println("cat is null he");
+                        categoryId = "None";
+                    }
+
+                    if (tag == null || "".equals(tag)) {
+                        tag = "None";
+                    }
+
+                    if (location == null || "".equals(location)) {
+                        location = "None";
+                    }
+                    
+                    if (fileType == null || "".equals(fileType)) {
+                        fileType = "None";
+                        filePath = "None";
+                    }
+                    
+                    if (reminder == null || "".equals(reminder)) {
+                            reminder = "None";
+                    }
+
+                    Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType, reminder, repeat };
+                    model.addRow(row);
+                }
+            
+            } 
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MainMenuUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_searchBarKeyReleased
     
 
     public void getCategories() {
@@ -488,13 +524,7 @@ public class MainMenuUI extends javax.swing.JFrame {
             categoryRoot.add(new DefaultMutableTreeNode(c));
 
         }
-        
-        
-//        DefaultMutableTreeNode cats1 = new DefaultMutableTreeNode("categories1");
-//        DefaultMutableTreeNode cats1_1 = new DefaultMutableTreeNode("categories 1.1");
-//        cats1.add(cats1_1);
-//        categoryRoot.add(cats1);
-        
+                
         DefaultTreeModel dtm = new DefaultTreeModel(categoryRoot);
         this.categoryTree.setModel(dtm);                   
     
@@ -577,12 +607,11 @@ public class MainMenuUI extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTable myNotesTable;
+    private javax.swing.JTextPane searchBar;
     private javax.swing.JComboBox<String> sortMenu;
     private javax.swing.JMenuItem trashMenu;
     // End of variables declaration//GEN-END:variables

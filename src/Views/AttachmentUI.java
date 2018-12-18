@@ -278,15 +278,10 @@ public class AttachmentUI extends javax.swing.JFrame {
             File file = fc.getSelectedFile();
             fileName = file.getName();
             filePath = file.getAbsolutePath();
-//            System.out.println(fileName);
-//            System.out.println(filePath);
-//            System.out.println("Clicked on attachment!");   
-//            System.out.println(this.getFileExtension(file));
                
             Attachment a = new Attachment(fileName, filePath, this.getFileExtension(file));
             System.out.println(a);
             this.ac.setAttachment(a);
-//                    System.out.println(this.ac.nfeUI.getNoteId());
 
         }  
     }
