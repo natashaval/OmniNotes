@@ -66,7 +66,7 @@ public class MainMenuUI extends javax.swing.JFrame {
         tcm.removeColumn( tcm.getColumn(1) ); //hide file type column
         tcm.removeColumn( tcm.getColumn(1) ); //hide reminder column
         tcm.removeColumn( tcm.getColumn(1) ); //hide reminder_repeat column
-
+        this.getNotes();
         this.toFront();
 
     }
@@ -289,7 +289,70 @@ public class MainMenuUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_sortMenuPropertyChange
 
+     private void getNotes() {
+        LinkedList<Note> myNotes = null;
+        
+                        
+        try {
+            myNotes = nc.sortNotes(1);
+            if (myNotes.size() > 0)  {            
+            ((DefaultTableModel)myNotesTable.getModel()).setRowCount(0);    //clear table
+
+            TableColumnModel tcm = myNotesTable.getColumnModel();
+
+            DefaultTableModel model = (DefaultTableModel) myNotesTable.getModel();
+            Iterator<Note> itr = myNotes.iterator();
+
+            //add data to notes table
+            while(itr.hasNext()) {                        
+                Note current = itr.next();
+                int id = current.getNoteId();
+                String title = current.getTitle();
+                String content = current.getContent();
+                int isArchive = current.getIsArchived();
+                String tag = current.getTag();
+                String location = current.getLocation();
+                String categoryId = current.getCategoryId();
+                String filePath = current.getAttachment().getLocation();
+                String fileType = current.getAttachment().getFileType();
+                String reminder = current.getReminder().getReminderDate();                                
+                String repeat = current.getReminder().getRepeat();
+                
+                if (categoryId == null) {
+                    System.out.println("cat is null he");
+                    categoryId = "None";
+                }
+                
+                if (tag == null || "".equals(tag)) {
+                    tag = "None";
+                }
+                
+                if (location == null || "".equals(location)) {
+                    location = "None";
+                }
+                
+                if (fileType == null || "".equals(fileType)) {
+                    fileType = "None";
+                    filePath = "None";
+                }
+                
+                if (reminder == null || "".equals(reminder)) {
+                    reminder = "None";
+                }
+                
+                Object[] row = { id, title, content, isArchive, tag, location, categoryId, filePath, fileType, reminder, repeat };
+                model.addRow(row);
+            }
+            
+        } 
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(MainMenuUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
+    
     private void sortMenuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_sortMenuItemStateChanged
+      
         LinkedList<Note> myNotes = null;
         MyComboItem item;
         
@@ -351,9 +414,7 @@ public class MainMenuUI extends javax.swing.JFrame {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             Logger.getLogger(MainMenuUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
+        }        
     }//GEN-LAST:event_sortMenuItemStateChanged
 
     private void categoryTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_categoryTreeValueChanged
